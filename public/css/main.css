@@ -6,9 +6,10 @@ body {
 }
 
 html {
-    scrollbar-gutter: stable;
     scroll-behavior: smooth;
 }
+
+/* Index */
 
 h1 {
     display: flex;
@@ -22,6 +23,8 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
+    background-color: #333; 
+    z-index: 2; 
 }
 
 nav ul {
@@ -30,6 +33,8 @@ nav ul {
     align-items: center; 
     list-style: none; 
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
 li a {
@@ -38,12 +43,12 @@ li a {
 }
 
 li {
-    padding: 0px 100px;
+    padding: 20px 30px; 
 }
 
 li:first-child {
     flex-grow: 2;
-    padding: 0;
+    padding: 10px 30px; 
 }
 
 .info {
@@ -51,7 +56,7 @@ li:first-child {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    margin-top: 10%;
+    margin-top: 10%; 
 }
 
 .box {
@@ -67,32 +72,40 @@ li:first-child {
     margin-top: 25px;
 }
 
-.navbar {
+/* Guide */
+
+.nav-side {
+    display: grid;
+    grid-template-rows: auto;
+    align-content: space-evenly;
     width: 250px; 
     background-color: #333; 
     color: white;
-    padding: 15px;
-    display: flex;
-    flex-direction: column; 
+    padding: 10px;
+    gap: 5px;
     height: 100vh;
     position: fixed;
-    top: 1;
-    left: 0;
+    top: 0;
+    left: -170px;  
+    transition: left 0.3s ease;
+    z-index: 1;
 }
 
-.navbar a {
+.nav-side:hover {
+    left: 0; 
+}
+
+.nav-side a {
+    text-align: center;
     color: white;
-    padding: 10px;
+    padding: 4.5rem 1rem;
     text-decoration: none;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    font-size: 14px;
 }
 
-.navbar a:hover {
+.nav-side a:hover {
     background-color: #575757;
     border-radius: 5px;
-}
-
-.navbar h1 {
-    margin-top: 50%;
 }
