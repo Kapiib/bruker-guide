@@ -1,5 +1,17 @@
+:root {
+    --background-color: black;
+    --text-color: white;
+    --nav-background-color: #333;
+    --nav-hover-background-color: #575757;
+    --border-color: white;
+    --border-highlight-color: cyan;
+    --input-background-color: #ddd;
+    --icon-color: #333;
+    --navbar-height: 60px;
+}
+
 body {
-    background-color: black;
+    background-color: var(--background-color);
     font-family: arial, sans-serif;
     margin: 0%;
     padding: 0%;
@@ -7,15 +19,27 @@ body {
 
 html {
     scroll-behavior: smooth;
+    scrollbar-width: none;
 }
-
-/* Index */
 
 h1 {
     display: flex;
     justify-content: center;
     margin-top: 10%;
+    color: var(--text-color);
+}
+
+h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
+}
+
+h3 a {
+    text-decoration: none;
+    color: cyan;
+    margin-left: 1rem;
 }
 
 nav {
@@ -23,8 +47,9 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #333; 
-    z-index: 2; 
+    height: var(--navbar-height); 
+    background-color: var(--nav-background-color); 
+    z-index: 2;
 }
 
 nav ul {
@@ -32,14 +57,15 @@ nav ul {
     justify-content: space-between; 
     align-items: center; 
     list-style: none; 
-    color: white;
+    color: var(--text-color);
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 li a {
     text-decoration: none;
-    color: white;
+    color: var(--text-color);
 }
 
 li {
@@ -56,20 +82,46 @@ li:first-child {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    margin-top: 10%; 
+    margin-top: 2rem; 
 }
 
 .box {
-    color: white;
-    border: 5px solid cyan;
+    color: var(--text-color);
+    border: 5px solid var(--border-highlight-color);
     border-radius: 15px;
     flex-basis: 20%;
     min-width: 150px;
     box-sizing: border-box;
     text-align: center;
     padding: 80px;
-    margin-right: 5%;
-    margin-top: 25px;
+}
+
+.search-div {
+    display: flex;
+    justify-content: center;
+}
+
+.search-div input {
+    border: var(--text-color) solid 2px;
+    border-radius: 5px;
+    margin-top: 5rem;
+    width: 15%;
+    padding: 6px 10px;
+    background: var(--input-background-color);
+    font-size: 17px;
+}
+
+.search-div button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: -40px;
+    margin-top: 5rem;
+}
+
+.search-div button i {
+    font-size: 18px;
+    color: var(--icon-color);
 }
 
 /* Guide */
@@ -77,18 +129,23 @@ li:first-child {
 .nav-side {
     display: grid;
     grid-template-rows: auto;
-    align-content: space-evenly;
+    align-content: flex-start;
     width: 250px; 
-    background-color: #333; 
-    color: white;
+    background-color: var(--nav-background-color); 
+    color: var(--text-color);
     padding: 10px;
-    gap: 5px;
-    height: 100vh;
     position: fixed;
-    top: 0;
+    top: var(--navbar-height); 
+    height: calc(100vh - var(--navbar-height)); 
     left: -170px;  
     transition: left 0.3s ease;
     z-index: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.nav-side:hover ~ .main-content {
+    margin-left: 280px;
 }
 
 .nav-side:hover {
@@ -97,15 +154,61 @@ li:first-child {
 
 .nav-side a {
     text-align: center;
-    color: white;
-    padding: 4.5rem 1rem;
+    color: var(--text-color);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
     text-decoration: none;
     display: block;
-    margin-bottom: 5px;
     font-size: 14px;
+    border: solid 2px var(--border-color);
+    border-radius: 5px;
 }
 
 .nav-side a:hover {
-    background-color: #575757;
+    background-color: var(--nav-hover-background-color);
     border-radius: 5px;
+}
+
+.main-content {
+    margin-left: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(100vh - var(--navbar-height));
+    transition: margin-left 0.3s ease;
+    padding-top: calc(var(--navbar-height));
+}
+
+.guide-h1 {
+    margin-top: 5rem;
+    margin-bottom: -1rem;
+}
+
+h2 {
+    color: white;
+    padding-top: 5rem;
+}
+
+p {
+    color: white;
+    text-align: justify;
+}
+
+/* Login */
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    border: cyan solid 5px;
+}
+
+label input {
+    
 }

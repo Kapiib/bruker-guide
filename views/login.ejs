@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head'); %>
+</head>
+<body>
+    
+    <%- include ('./partials/nav'); %>
+
+    <h1>Login</h1>
+
+    <form class="login" action="" method="POST">
+        <label for="">
+            <input type="text" placeholder="Email" name="email" id="email">
+        </label>
+        <label for="">
+            <input type="text" placeholder="Password" name="password" id="password">
+        </label>
+        <label for="">
+            <input type="submit" name="send" id="submit">
+        </label>
+    </form>
+    
+    <h3>Dont have an account? <a href="/register">Register here</a></h3>
+
+</body>
+</html>

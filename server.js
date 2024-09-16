@@ -16,4 +16,24 @@ app.get("/guide", (req, res) => {
     res.render("guide");
 })
 
+app.get("/login", (req, res) => {
+    res.render("login");
+})
+
+app.get("/register", (req, res) => {
+    res.render("register");
+})
+
 app.listen(process.env.PORT);
+
+app.post("/login", (req, res) => {
+    console.log("Logging in", req.body);
+    const {email, password} = req.body;
+
+    console.log(email)
+})
+
+app.post("/register", (req, res) => {
+    console.log("Making an account", req.body);
+
+})
