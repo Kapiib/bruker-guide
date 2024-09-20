@@ -1,14 +1,21 @@
 :root {
-    --background-color: black;
-    --text-color: white;
-    --nav-background-color: #333;
-    --nav-hover-background-color: #575757;
-    --border-color: white;
-    --border-highlight-color: cyan;
-    --input-background-color: #ddd;
-    --icon-color: #333;
+    --background-color: #000000; /* Pure black */
+    --text-color: #f2f2f2; /* Soft white */
+    --nav-background-color: #1a1a1a; /* Dark black */
+    --nav-hover-background-color: #b71c1c; /* Bold dark red */
+    --border-color: #d32f2f; /* Vivid red for borders */
+    --border-highlight-color: #e57373; /* Softened red highlights */
+    --input-background-color: #262626; /* Dark grey for inputs */
+    --icon-color: #e53935; /* Bright red for icons */
+    --button-background-color: #b71c1c; /* Bold red */
+    --button-hover-background-color: #d32f2f; /* Bright red hover */
     --navbar-height: 60px;
+    --button-border-radius: 0; /* Sharp edges for boldness */
+    --button-shadow: 0 4px 10px rgba(211, 47, 47, 0.3); /* Red shadow */
+    --button-hover-shadow: 0 8px 20px rgba(211, 47, 47, 0.5); /* Stronger shadow on hover */
 }
+
+
 
 body {
     background-color: var(--background-color);
@@ -77,6 +84,10 @@ li:first-child {
     padding: 10px 30px; 
 }
 
+.logo {
+    width: 6rem;
+}
+
 .info {
     display: flex;
     flex-wrap: wrap;
@@ -109,6 +120,7 @@ li:first-child {
     padding: 6px 10px;
     background: var(--input-background-color);
     font-size: 17px;
+    color: white;
 }
 
 .search-div button {
@@ -170,7 +182,6 @@ li:first-child {
 }
 
 .main-content {
-    margin-left: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -206,9 +217,6 @@ form {
 }
 
 label {
-    border: cyan solid 5px;
-}
-
-label input {
-    
+    border: 5px solid var(--border-color);
+    box-shadow: 4px 8px 17px var(--border-highlight-color);
 }
