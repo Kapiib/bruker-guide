@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head'); %>
+</head>
+<body>
+
+    <%- include ('./partials/nav'); %>
+
+<form action="" method="POST" class="formContainer" enctype="multipart/form-data">
+    <div>
+        <div id="create">
+            <h2>Lag en guide</h2>
+
+            <label for="">Tittel</label>
+                <input type="text" name="Tittel" required>
+            <label for="">Tag</label>
+                <input type="text" name="Tag" required>
+        </div>
+
+        <div id="addNewSection">
+            <h2>Seksjon</h2>
+
+            <label for="">Overskrift</label>
+                <input type="text" name="Overskrift" required>
+            <label for="">Beskrivelse</label>
+                <input type="text" name="Beskrivelse" required>
+            <label for="">Bilde</label>
+                <input type="file" name="photo" id="photo" accept="image/*">
+            </div>
+        <button class="SectionButton" onclick="NySeksjon()">Lag ny seksjon</button>
+    </div>
+    <button class="send">Send</button>
+</form>
+        
+
+    <script>
+
+        function NySeksjon() {
+            let newSection = document.getElementById("addNewSection")
+
+            newSection.innerHTML += `
+                           <div id="addNewSection">
+            <h2>Seksjon</h2>
+
+            <label for="">Overskrift</label>
+                <input type="text" name="Overskrift" required>
+            <label for="">Beskrivelse</label>
+                <input type="text" name="Beskrivelse" required>
+            <label for="">Bilde</label>
+                <input type="file" name="photo" id="photo" accept="image/*">
+        </div>
+        `
+        }
+
+
+    </script>
+    
+</body>
+</html>

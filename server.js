@@ -1,9 +1,35 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 const bcrpyt = require("bcrypt")
+const multer = require("multer")
+const path = require("path")
 require("dotenv").config();
+
+const Schema = mongoose.Schema;
+
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, "./uploads")
+    },
+
+    filename: function(req, file, cb) {
+        const ext = path.extname(file.originalname);
+        console.log("EXT", ext)
+
+        // if (ext !== ".png") {
+        //     return cb(new Error("Only Png file accepted"))
+        // }
+
+        const fileName = file.originalname + ".png"
+
+        cb(null, fileName)
+    }
+})
+
+const uploads = multer({
+    storage: diskStorage,
+})
 
 
 app.set("view engine", "ejs");
@@ -37,6 +63,10 @@ app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 })
 
+app.get("/create", (req, res) => {
+    res.render("create");
+})
+
 app.listen(process.env.PORT);
 
 app.post("/login", (req, res) => {
@@ -46,12 +76,10 @@ app.post("/login", (req, res) => {
     User.findOne({email: email}).then((user) => {
         console.log("results", user)
 
-        bcrpyt.compare(password, user.password).then((result) => {
+        bcrypt.compare(password, user.password).then((result) => {
             console.log(result);
             if(result) {
                 res.status(200).redirect("/dashboard");
-            } else {
-                res.status(500).json({message: "lalala"})
             }
         })
 
@@ -90,3 +118,12 @@ const userSchema = new Schema({
 })
 
 const User = mongoose.model("user", userSchema);
+const BrukerGuide = mongoose.model("")
+
+app.post("/create", uploads.array("photo"), (req, res) => {
+ 
+    console.log(req.body, "BODY")
+    console.log(req.body, "FILES")
+
+
+})
