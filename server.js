@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const bcrpyt = require("bcrypt")
+const bcrypt = require("bcrypt")
 const multer = require("multer")
 const path = require("path")
 require("dotenv").config();
@@ -117,13 +117,24 @@ const userSchema = new Schema({
     password: String
 })
 
-const User = mongoose.model("user", userSchema);
-const BrukerGuide = mongoose.model("")
+const brukerSchema = new Schema({
+    tittel: String,
+    tag: Array,
+    overskrift: Array,
+    beskrivelse: Array,
+    bilde: Array
+})
 
-app.post("/create", uploads.array("photo"), (req, res) => {
- 
+const User = mongoose.model("user", userSchema);
+const BrukerGuide = mongoose.model("BrukerGuide", brukerSchema)
+
+app.post("/create", uploads.array("photo"), async (req, res) => {
     console.log(req.body, "BODY")
     console.log(req.body, "FILES")
 
-
+    const newUserGuide = new BrukerGuide ({
+        tittel: req.body.tittel,
+        tag: req.body.tag,
+        beskrivelse: req.body.beskrivelse })
+    const result = await newUserGuide.save();
 })

@@ -242,49 +242,121 @@ form {
     flex-direction: column;
     align-items: center;
     margin-top: 5rem;
-    font-size: 30px;
+    font-size: 1.8rem; /* Using rem for font size */
+    width: 100%;
+    max-width: 800px; /* Limiting the maximum width */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+    background-color: var(--input-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 #create label {
     color: var(--text-color);
+    font-size: 1.1rem; /* Using rem for consistency */
+    margin-top: 1rem;
+    width: 100%;
+    text-align: left;
 }
 
 #create h2 {
     margin-top: 0;
     padding-top: 1rem;
-}
-
-.seksjon {
-    border-radius: 15px;
-    padding: 10px;
-    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem; /* Adjusting heading size */
 }
 
 #create input {
-    margin-left: 1rem;
-}
-
-/* Ny Seksjon */
-
-#addNewSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 30px;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-highlight-color);
+    background-color: var(--input-background-color);
     color: var(--text-color);
 }
 
-#addNewSection label {
-    margin-top: 2rem;
+#create input:focus {
+    outline: none;
+    border-color: var(--border-color);
 }
 
-#addNewSection h2 {
-    margin-bottom: 0;
+.newSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.8rem; /* Using rem */
+    color: var(--text-color);
+    width: 100%;
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: var(--input-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.newSection input {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-highlight-color);
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+}
+
+.newSection textarea {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    font-size: 1rem;
+    min-width: 100%; 
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-highlight-color);
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    resize: none;
+    line-height: 1.5rem;
+}
+
+.newSection textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.newSection label {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    width: 100%;
+    text-align: left;
+}
+
+.newSection h2 {
     margin-top: 0;
-    padding-top: 3rem;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    font-size: 2rem;
+    text-align: center;
 }
 
 .SectionButton {
-    font-size: 25px;
+    font-size: 1.2rem; /* Use rem for buttons */
+    padding: 0.8rem 1.5rem;
     margin-top: 2rem;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.SectionButton:hover {
+    background-color: var(--button-hover-background-color);
+    box-shadow: var(--button-hover-shadow);
 }
