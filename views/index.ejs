@@ -10,17 +10,41 @@
     <h1>Home</h1>
 
     <div class="search-div">
-        <input type="text" placeholder="Search..">
+        <input type="text" id="searchInput" placeholder="Search..." oninput="searchItems()">
         <button type="submit"><i class="fa fa-search"></i></button>
     </div>
 
     <div class="info">
-        <div class="box">Item 1</div>
-        <div class="box">Item 2</div>
-        <div class="box">Item 3</div>
-        <div class="box">Item 4</div>
-        <div class="box">Item 5</div>
+        <div class="box">Css FlexBox</div>
+        <div class="box">Css Grid</div>
+        <div class="box">Javascript</div>
+        <div class="box">Html</div>
+        <div class="box">Ejs</div>
     </div>
+
+    <script>
+        function searchItems() {
+            // Get the search input value and convert it to lowercase
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Create a regex to match items that start with the input, or have the input after a space
+            const regex = new RegExp(`(^|\\s)${input}`);
+            
+            // Get all div elements inside the .info div
+            const items = document.querySelectorAll('.info div');
+
+            // Loop through all items and toggle their visibility based on the regex
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                
+                if (regex.test(text)) {
+                    item.style.display = ''; // Show item
+                } else {
+                    item.style.display = 'none'; // Hide item
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
