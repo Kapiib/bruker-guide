@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head'); %>
+    </head>
+    <body>
+
+        <h1>Edit Guide</h1>
+
+        <div class="edit">
+            <form action="/edit-guide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
+                <label for="Tittel">Title:</label>
+                <input type="text" name="Tittel" value="<%= guide.tittel %>" required />
+    
+                <label for="Tag">Tag:</label>
+                <input type="text" name="Tag" value="<%= guide.tag.join(', ') %>" />
+    
+                <label for="Overskrift">Overskrift:</label>
+                <input type="text" name="Overskrift" value="<%= guide.overskrift.join(', ') %>" />
+    
+                <label for="Beskrivelse">Beskrivelse:</label>
+                <textarea name="Beskrivelse" required><%= guide.beskrivelse.join(', ') %></textarea>
+    
+                <label for="photo">Upload Images:</label>
+                <input type="file" name="photo" multiple />
+    
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </body>
+</html>

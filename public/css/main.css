@@ -32,7 +32,7 @@ html {
 h1 {
     display: flex;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 2rem;
     color: var(--text-color);
 }
 
@@ -309,6 +309,7 @@ p {
 /* Register */
 
 .register input[type="text"],
+.register input[type="email"],
 .register input[type="password"] {
     padding: 10px;
     margin: 10px 0;
@@ -320,6 +321,7 @@ p {
 }
 
 .register input[type="text"]:focus,
+.register input[type="email"]:focus,
 .register input[type="password"]:focus {
     border-color: var(--border-highlight-color);
     outline: none;
@@ -343,7 +345,99 @@ p {
     box-shadow: var(--button-hover-shadow);
 }
 
+/* Edit */
+
+.edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit button {
+    font-size: 100px;
+    border-radius: 20px;
+}
+
+.edit a {
+    text-decoration: none;
+    color: var(--background-color);
+}
+
+.edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    font-size: 1.8rem; /* Using rem for font size */
+    width: 100%;
+    max-width: 800px; /* Limiting the maximum width */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+    background-color: var(--input-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.edit label {
+    color: var(--text-color);
+    font-size: 1.1rem; /* Using rem for consistency */
+    margin-top: 1rem;
+    width: 100%;
+    text-align: left;
+}
+
+.edit h2 {
+    margin-top: 0;
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 2rem; /* Adjusting heading size */
+}
+
+.edit input {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+}
+
+.edit input:focus {
+    border-color: var(--border-highlight-color);
+    outline: none;
+}
+
+.edit textarea {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    font-size: 1rem;
+    min-width: 100%; 
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    resize: none;
+    line-height: 1.5rem;
+}
+
+.edit textarea:focus {
+    border-color: var(--border-highlight-color);
+    outline: none;
+}
+
+.edit textarea::-webkit-scrollbar {
+    display: none;
+}
+
 /* Dashboard */
+
+
+/* Create */
 
 .create {
     display: flex;
@@ -360,8 +454,6 @@ p {
     text-decoration: none;
     color: var(--background-color);
 }
-
-/* Create */
 
 form {
     display: flex;

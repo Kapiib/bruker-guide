@@ -10,14 +10,13 @@
     
     <div class="nav-side">
         <a href="/">Home</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">4</a>
-        <a href="#">4</a>
-        <a href="#">4</a>
-        <a href="#">4</a>
-        <a href="#">4</a>
+        <% if (guides.length > 0) { %>
+            <% guides.forEach(guide => { %>
+                <a href="#<%= guide.tittel %>"><%= guide.tittel %></a>
+            <% }); %>
+        <% } else { %>
+            <p>No guides available</p>
+        <% } %>
     </div>
     
     
@@ -26,17 +25,25 @@
     
         <% if (guides.length > 0) { %>
             <% guides.forEach(guide => { %>
-                <div class="guide">
+                <div class="guide" id="<%= guide.tittel %>">
                     <h2><%= guide.tittel %></h2>
-                    <p><strong>Tag:</strong> <%= guide.tag %></p>
-                    <p><strong>Overskrift:</strong> <%= guide.overskrift %></p>
-                    <p><strong>Beskrivelse:</strong> <%= guide.beskrivelse %></p>
-                    <p><strong>Author:</strong> <%= guide.author %></p>
+                    <p><strong>Tag:</strong> <%= guide.tag.join(", ") %></p>
+                    <p><strong>Overskrift:</strong> <%= guide.overskrift.join(", ") %></p>
+                    <p><strong>Beskrivelse:</strong> <%= guide.beskrivelse.join(", ") %></p>
                     <div class="images">
                         <% guide.bilde.forEach(image => { %>
                             <img src="/uploads/<%= image %>" alt="<%= guide.tittel %> image" />
                         <% }); %>
                     </div>
+                    <p><strong>Author:</strong> <%= guide.author %></p>
+    
+                    <!-- Show Edit and Delete buttons only for the author -->
+                    <% if (guide.author === username) { %>
+                        <a href="/edit-guide/<%= guide._id %>" class="btn btn-edit">Edit</a>
+                        <form action="/delete-guide/<%= guide._id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-delete">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             <% }); %>
         <% } else { %>
