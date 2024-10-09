@@ -138,6 +138,46 @@ li:first-child {
 
 /* Guide */
 
+.uploads {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.action-buttons {
+    display: grid;
+    grid-auto-flow: column;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+.delete-button {
+    margin-top: 1rem;
+    padding: 12px;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 16px;
+    box-shadow: var(--button-shadow);
+}
+
+.edit-button {
+    margin-top: 1rem;
+    padding: 12px;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 16px;
+    box-shadow: var(--button-shadow);
+    text-decoration: none;
+}
+
 .nav-side {
     display: grid;
     grid-template-rows: auto;
