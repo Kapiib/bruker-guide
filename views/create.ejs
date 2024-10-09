@@ -30,12 +30,14 @@
             </div>
         </div>
         <button class="send">Send</button>
+        <button class="SectionButton" onclick="NySeksjon()">Lag ny seksjon</button>
     </form>
-    <button class="SectionButton" onclick="NySeksjon()">Lag ny seksjon</button>
         
 
     <script>
         function NySeksjon() {
+            event.preventDefault();
+
             let newSectionContainer = document.createElement('div');
             newSectionContainer.classList.add('newSection');
 

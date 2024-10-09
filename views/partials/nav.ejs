@@ -1,7 +1,21 @@
 <nav>
     <ul>
         <li><a href="/"><img src="/pc-guide-logo-no.png" alt="Logo" class="logo"></a></li>
-        <li><a href="/guide">Guide</a></li>
-        <li><a href="/login">Login</a></li>
+        <li><a href="/guides">Guides</a></li>
+
+        <% if (username) { %>
+            <li><a href="/dashboard">Dashboard</a></li>
+        <% } %>
+
+        <% if (username) { %>
+            <li><a href="/create">Create</a></li>
+        <% } %>
+
+        <% if (username) { %>
+            <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+
+            <li><a href="/login">Login</a></li>
+        <% } %>
     </ul>
 </nav>

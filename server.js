@@ -65,38 +65,56 @@ const guideSchema = new Schema({
 const User = mongoose.model("user", userSchema);
 const UserGuide = mongoose.model("UserGuide", guideSchema);
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+    const username = req.cookies.username;
+    try {
+        const guides = await UserGuide.find();
+        res.render("index", { guides, username });
+    } catch (error) {
+        console.error("Error fetching guides:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
-app.get("/guide", async (req, res) => {
+app.get("/guides", async (req, res) => {
   try {
     const guides = await UserGuide.find();
     const username = req.cookies.username;
-    res.render("guide", { guides, username });
+    res.render("guides", { guides, username });
   } catch (error) {
     console.error("Error fetching guides:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
+app.get("/guide", async (req, res) => {
+    const username = req.cookies.username;
+    res.render("guide", { username });
+})
+
 app.get("/login", (req, res) => {
-  res.render("login");
+  const username = req.cookies.username;
+  res.render("login", { username });
 });
 
+app.get("/logout", (req, res) => {
+    res.clearCookie("username");
+    res.redirect("/");
+  });
+
 app.get("/register", (req, res) => {
-  res.render("register");
+  const username = req.cookies.username;
+  res.render("register", { username });
 });
 
 app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+  const username = req.cookies.username;
+  res.render("dashboard", { username });
 });
 
 app.get("/create", (req, res) => {
-  res.render("create");
-});
-
-app.listen(process.env.PORT);
+    const username = req.cookies.username;
+    res.render("create", { username });});
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -168,14 +186,27 @@ app.post("/create", uploads.array("photo"), async (req, res) => {
   try {
     const result = await newUserGuide.save();
     console.log("Guide saved:", result);
-    res.redirect("/guide");
+    res.redirect("/dashboard");
   } catch (error) {
     console.error("Error saving guide:", error);
     res.status(500).send("Error saving guide");
   }
 });
 
-
+app.get("/guide/:id", async (req, res) => {
+    const { id } = req.params;
+    const username = req.cookies.username;
+    try {
+        const guide = await UserGuide.findById(id);
+        if (!guide) {
+            return res.status(404).send("Guide not found");
+        }
+        res.render("guide", { guide, username });
+    } catch (error) {
+        console.error("Error fetching guide details:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 app.get("/edit-guide/:id", async (req, res) => {
     try {
@@ -183,7 +214,8 @@ app.get("/edit-guide/:id", async (req, res) => {
         if (guide.author !== req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
-        res.render("edit-guide", { guide });
+        const username = req.cookies.username;
+        res.render("edit-guide", { guide, username });
     } catch (error) {
         console.error("Error fetching guide for editing:", error);
         res.status(500).send("Internal Server Error");
@@ -208,7 +240,7 @@ app.post("/edit-guide/:id", uploads.array("photo"), async (req, res) => {
         }
         
         await UserGuide.findByIdAndUpdate(req.params.id, updateData);
-        res.redirect("/guide");
+        res.redirect("/guides");
     } catch (error) {
         console.error("Error updating guide:", error);
         res.status(500).send("Error updating guide");
@@ -223,9 +255,11 @@ app.post("/delete-guide/:id", async (req, res) => {
         }
 
         await UserGuide.findByIdAndDelete(req.params.id);
-        res.redirect("/guide");
+        res.redirect("/guides");
     } catch (error) {
         console.error("Error deleting guide:", error);
         res.status(500).send("Error deleting guide");
     }
 });
+
+app.listen(process.env.PORT);

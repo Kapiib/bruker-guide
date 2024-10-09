@@ -15,12 +15,17 @@
     </div>
 
     <div class="info">
-        <div class="box">Css FlexBox</div>
-        <div class="box">Css Grid</div>
-        <div class="box">Javascript</div>
-        <div class="box">Html</div>
-        <div class="box">Ejs</div>
+        <% if (guides.length > 0) { %>
+            <% guides.forEach(guide => { %>
+                <div class="box">
+                    <a href="/guide/<%= guide._id %>"><%= guide.tittel %></a>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No guides available</p>
+        <% } %>
     </div>
+    
 
     <script>
         function searchItems() {
