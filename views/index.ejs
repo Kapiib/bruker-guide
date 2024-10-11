@@ -18,7 +18,7 @@
         <% if (guides.length > 0) { %>
             <% guides.forEach(guide => { %>
                 <div class="box">
-                    <a href="/guide/<%= guide._id %>"><%= guide.tittel %></a>
+                    <a class="link" href="/guide/<%= guide._id %>"><%= guide.tittel %></a>
                 </div>
             <% }); %>
         <% } else { %>

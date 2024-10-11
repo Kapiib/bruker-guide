@@ -90,26 +90,40 @@ li:first-child {
 
 .info {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 2rem; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 1rem; 
+    padding: 1rem; 
 }
 
 .box {
-    color: var(--text-color);
-    border: 5px solid var(--border-color);
-    border-radius: 15px;
-    flex-basis: 20%;
-    min-width: 150px;
-    box-sizing: border-box;
     text-align: center;
-    padding: 5rem;
+    padding: 2rem; 
+}
+
+.link {
+    padding: 2rem 3rem; 
+    font-size: 17px;
+    color: var(--text-color);
+    text-decoration: none; 
+    border-radius: 10px; 
+    background-color: rgba(255, 255, 255, 0.2); 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.link:hover {
+    background-color: rgba(255, 255, 255, 0.5); 
+    transform: scale(1.05); 
+}
+
+.box:hover {
+    border-color: var(--border-highlight-color); 
 }
 
 .search-div {
     display: flex;
     justify-content: center;
+    margin-bottom: 3rem;
 }
 
 .search-div input {
@@ -147,8 +161,8 @@ li:first-child {
 .action-buttons {
     display: grid;
     grid-auto-flow: column;
-    align-content: center;
     justify-content: space-evenly;
+    padding-bottom: 1rem;
 }
 
 .delete-button {
@@ -189,16 +203,16 @@ li:first-child {
     position: fixed;
     top: var(--navbar-height); 
     height: calc(100vh - var(--navbar-height)); 
-    /* left: -170px;   */
+    left: -170px;  
     transition: left 0.3s ease;
     z-index: 1;
     overflow-y: auto;
     scrollbar-width: none;
 }
 
-/* .nav-side:hover ~ .main-content {
+.nav-side:hover ~ .main-content {
     margin-left: 280px;
-} */
+}
 
 .nav-side:hover {
     left: 0; 
@@ -222,12 +236,9 @@ li:first-child {
 }
 
 .main-content {
-    margin-left: 280px;
+    display: grid;
+    align-items: baseline;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     height: calc(100vh - var(--navbar-height));
     transition: margin-left 0.3s ease;
     padding-top: calc(var(--navbar-height));
