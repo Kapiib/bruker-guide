@@ -30,8 +30,9 @@ const diskStorage = multer.diskStorage({
 });
 
 const uploads = multer({
-  storage: diskStorage,
-});
+    storage: diskStorage,
+    limits: { fileSize: 5 * 1024 * 1024 }, 
+  });
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -183,27 +184,31 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/create", uploads.array("photo"), async (req, res) => {
-  const { Tittel, Tag, Overskrift, Beskrivelse, username } = req.body;
-  const author = req.cookies.username
-
-  const newUserGuide = new UserGuide({
-    tittel: req.body.Tittel,
-    tag: req.body.Tag,
-    overskrift: req.body.Overskrift,
-    beskrivelse: req.body.Beskrivelse,
-    bilde: req.files.map((file) => file.filename),
-    author: author,
+    if (req.files.length === 0) {
+      return res.status(400).send("No files were uploaded.");
+    }
+  
+    const { Tittel, Tag, Overskrift, Beskrivelse } = req.body;
+    const author = req.cookies.username;
+  
+    const newUserGuide = new UserGuide({
+      tittel: Tittel,
+      tag: Tag,
+      overskrift: Overskrift,
+      beskrivelse: Beskrivelse,
+      bilde: req.files.map((file) => file.filename),
+      author: author,
+    });
+  
+    try {
+      const result = await newUserGuide.save();
+      console.log("Guide saved:", result);
+      res.redirect("/dashboard");
+    } catch (error) {
+      console.error("Error saving guide:", error);
+      res.status(500).send("Error saving guide");
+    }
   });
-
-  try {
-    const result = await newUserGuide.save();
-    console.log("Guide saved:", result);
-    res.redirect("/dashboard");
-  } catch (error) {
-    console.error("Error saving guide:", error);
-    res.status(500).send("Error saving guide");
-  }
-});
 
 app.get("/guide/:id", async (req, res) => {
     const { id } = req.params;
