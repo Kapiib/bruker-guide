@@ -5,42 +5,49 @@
 </head>
 <body>
 
-    <%- include('./partials/nav'); %>
-  
-    <h1>Your guides</h1>
-  
-    <div class="search-div">
-      <input type="text" id="searchInput" placeholder="Search..." oninput="searchItems()">
-    </div>
-  
-    <div class="info">
-      <% if (guides.length > 0) { %>
-        <% guides.forEach(guide => { %>
-          <div class="box">
-            <a class="link" href="/guide/<%= guide._id %>"><%= guide.tittel %></a>
-          </div>
-        <% }); %>
-      <% } else { %>
-        <p>No guides available</p>
-      <% } %>
-    </div>
-  
-    <script>
-      function searchItems() {
-        const input = document.getElementById('searchInput').value.toLowerCase();
-        const regex = new RegExp(`(^|\\s)${input}`);
-        const items = document.querySelectorAll('.info .box');
-        
-        items.forEach(item => {
-          const text = item.textContent.toLowerCase();
-          if (regex.test(text)) {
-            item.style.display = '';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      }
-    </script>
+<%- include('./partials/nav'); %>
+
+<h1>Your guides</h1>
+
+<div class="search-div">
+  <input type="text" id="searchInput" placeholder="Search..." oninput="searchItems()">
+</div>
+
+<div class="info">
+  <% if (guides.length > 0) { %>
+    <% guides.forEach(guide => { %>
+      <div class="guide-card">
+        <h2><%= guide.tittel %></h2>
+        <div class="guide-card-actions">
+          <a href="/guide/<%= guide._id %>" class="view-button">View</a>
+          <a href="/edit-guide/<%= guide._id %>" class="edit-button">Edit</a>
+          <form action="/delete-guide/<%= guide._id %>" method="POST" style="display: inline;">
+            <button type="submit" class="delete-button">Delete</button>
+          </form>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No guides available</p>
+  <% } %>
+</div>
+
+<script>
+  function searchItems() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const regex = new RegExp(input);
+    const items = document.querySelectorAll('.info .guide-card');
     
-  </body>
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      if (regex.test(text)) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+</body>
 </html>

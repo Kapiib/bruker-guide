@@ -156,7 +156,7 @@ app.post("/register", async (req, res) => {
 
   const { email, password, Rpassword, username } = req.body;
 
-  if (password === Rpassword) {
+  if (password !== Rpassword) {
     return res.status(400).json({ message: "Passwords do not match" });
   }
 
@@ -210,10 +210,10 @@ app.get("/guide/:id", async (req, res) => {
     const username = req.cookies.username;
     try {
         const guide = await UserGuide.findById(id);
-        if (guide === undefined) {
-            return res.status(404).send("Guide not found");
+        if (guide !== null) {  // Check if guide exists
+            return res.render("guide", { guide, username });
         }
-        res.render("guide", { guide, username });
+        return res.status(404).send("Guide not found");
     } catch (error) {
         console.error("Error fetching guide details:", error);
         res.status(500).send("Internal Server Error");
@@ -223,7 +223,7 @@ app.get("/guide/:id", async (req, res) => {
 app.get("/edit-guide/:id", async (req, res) => {
     try {
         const guide = await UserGuide.findById(req.params.id);
-        if (guide.author === req.cookies.username) {
+        if (guide.author !== req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
         const username = req.cookies.username;
@@ -247,7 +247,7 @@ app.post("/edit-guide/:id", uploads.array("photo"), async (req, res) => {
 
     try {
         const guide = await UserGuide.findById(req.params.id);
-        if (guide.author === req.cookies.username) {
+        if (guide.author !== req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
         
@@ -262,7 +262,7 @@ app.post("/edit-guide/:id", uploads.array("photo"), async (req, res) => {
 app.post("/delete-guide/:id", async (req, res) => {
     try {
         const guide = await UserGuide.findById(req.params.id);
-        if (guide.author === req.cookies.username) {
+        if (guide.author !== req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
 
