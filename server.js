@@ -23,16 +23,21 @@ const diskStorage = multer.diskStorage({
     //     return cb(new Error("Only Png file accepted"))
     // }
 
-    const fileName = file.originalname + ".png";
+    const fileName = file.originalname;
 
     cb(null, fileName);
   },
 });
 
 const uploads = multer({
-    storage: diskStorage,
-    limits: { fileSize: 5 * 1024 * 1024 }, 
-  });
+  storage: diskStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Limit to 5MB
+});
+
+const uploadFields = uploads.fields([
+  { name: 'photo', maxCount: 10 }, // Adjust maxCount as needed
+  { name: 'newPhoto', maxCount: 10 } // For new sections
+]);
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -240,28 +245,58 @@ app.get("/edit-guide/:id", async (req, res) => {
 });
 
 // Handle edit form submission
-app.post("/edit-guide/:id", uploads.array("photo"), async (req, res) => {
-    const { Tittel, Tag, Overskrift, Beskrivelse } = req.body;
-    const updateData = {
-        tittel: Tittel,
-        tag: Tag,
-        overskrift: Overskrift,
-        beskrivelse: Beskrivelse,
-        bilde: req.files ? req.files.map(file => file.filename) : []
-    };
+app.post("/edit-guide/:id", uploadFields, async (req, res) => {
+  console.log("Files:", req.files);
+  console.log("Body:", req.body);
 
-    try {
-        const guide = await UserGuide.findById(req.params.id);
-        if (guide.author !== req.cookies.username) {
-            return res.status(403).send("Forbidden");
-        }
-        
-        await UserGuide.findByIdAndUpdate(req.params.id, updateData);
-        res.redirect("/guides");
-    } catch (error) {
-        console.error("Error updating guide:", error);
-        res.status(500).send("Error updating guide");
-    }
+  const { Tittel, Tag, existingImages, deletedImages } = req.body;
+
+  // Handle existing images
+  let updatedImages = existingImages ? (Array.isArray(existingImages) ? existingImages : [existingImages]) : [];
+
+  // Handle updated existing photos
+  if (req.files.photo) {
+    req.files.photo.forEach((file, index) => {
+      updatedImages[index] = file.filename;
+    });
+  }
+
+  // Handle new photos
+  if (req.files.newPhoto) {
+    req.files.newPhoto.forEach((file) => {
+      updatedImages.push(file.filename);
+    });
+  }
+
+  // Handle deleted images
+  if (deletedImages) {
+    const deletedImagesArray = Array.isArray(deletedImages) ? deletedImages : [deletedImages];
+    deletedImagesArray.forEach((deletedImage, index) => {
+      if (deletedImage) {
+        updatedImages[index] = '';
+      }
+    });
+  }
+
+  // Prepare update data for sections
+  const updatedOverskrifter = req.body.Overskrift || [];
+  const updatedBeskrivelser = req.body.Beskrivelse || [];
+
+  const updateData = {
+    tittel: Tittel,
+    tag: Tag.split(",").map(tag => tag.trim()),
+    overskrift: updatedOverskrifter,
+    beskrivelse: updatedBeskrivelser,
+    bilde: updatedImages.filter(img => img) // Remove empty strings
+  };
+
+  try {
+    await UserGuide.findByIdAndUpdate(req.params.id, updateData);
+    res.redirect(`/guide/${req.params.id}`);
+  } catch (error) {
+    console.error("Error updating guide:", error);
+    res.status(500).send("Error updating guide");
+  }
 });
 
 app.post("/delete-guide/:id", async (req, res) => {
@@ -272,7 +307,7 @@ app.post("/delete-guide/:id", async (req, res) => {
         }
 
         await UserGuide.findByIdAndDelete(req.params.id);
-        res.redirect("/");
+        res.redirect("/dashboard");
     } catch (error) {
         console.error("Error deleting guide:", error);
         res.status(500).send("Error deleting guide");

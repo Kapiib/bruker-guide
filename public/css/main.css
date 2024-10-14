@@ -100,7 +100,7 @@ li:first-child {
 }
 
 .link {
-    padding: 2rem 3rem; 
+    padding: 2rem 4rem; 
     font-size: 17px;
     color: var(--text-color);
     text-decoration: none; 
@@ -599,6 +599,7 @@ p {
     border-radius: 0.3rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
   }
   .edit-button {
     background-color: #2196F3;

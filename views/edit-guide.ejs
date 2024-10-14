@@ -4,7 +4,6 @@
         <%- include('./partials/head'); %>
     </head>
     <body>
-    
         <%- include('./partials/nav'); %>
     
         <form class="formContainer" action="/edit-guide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
@@ -12,22 +11,25 @@
                 <div class="edit">
                     <label for="Tittel">Title</label>
                     <input type="text" name="Tittel" value="<%= guide.tittel %>" required />
-    
+        
                     <label for="Tag">Tag</label>
                     <input type="text" name="Tag" value="<%= guide.tag.join(', ') %>" />
                 </div>
-    
-                <% if (guide.overskrift && guide.overskrift.length) { %>
+        
+                <% if (guide && guide.overskrift && Array.isArray(guide.overskrift) && guide.overskrift.length) { %>
                     <% guide.overskrift.forEach((overskrift, index) => { %>
                         <div class="newSection" id="section-<%= index %>">
                             <h3>Section <%= index + 1 %></h3>
-    
+                
                             <label for="Overskrift<%= index %>">Overskrift</label>
-                            <input type="text" name="Overskrift" value="<%= overskrift %>" required>
-    
+                            <input type="text" name="Overskrift[]" value="<%= overskrift %>" required>
+                
                             <label for="Beskrivelse<%= index %>">Beskrivelse</label>
-                            <textarea name="Beskrivelse" required><%= guide.beskrivelse[index] %></textarea>
-    
+                            <textarea name="Beskrivelse[]" required><%= guide.beskrivelse[index] %></textarea>
+                
+                            <input type="hidden" name="existingImages[]" value="<%= guide.bilde[index] %>">
+                            <input type="hidden" name="deletedImages[]" value="" class="deletedImageInput">
+                
                             <label for="photo<%= index %>">Bilde</label>
                             <div class="file-input-container">
                                 <input type="file" name="photo" accept="image/*" class="file-input" id="photo<%= index %>" onchange="updateLabel(this)">
@@ -43,9 +45,9 @@
                         </div>
                     <% }); %>
                 <% } %>
-    
+        
                 <div id="newSections"></div>
-    
+        
                 <div id="end">
                     <button type="button" class="end" id="addSection">Add New Section</button>
                     <button type="submit" class="end">Save Changes</button>
@@ -66,37 +68,45 @@
             }
     
             document.getElementById('addSection').addEventListener('click', function() {
-                const newSections = document.getElementById('newSections');
-                const sectionCount = newSections.children.length;
-    
-                const newSection = document.createElement('div');
-                newSection.className = 'newSection';
-                newSection.innerHTML = `
-                    <h3>New Section</h3>
-                    <label>Overskrift:</label>
-                    <input type="text" name="Overskrift" required>
-                    <label>Beskrivelse:</label>
-                    <textarea name="Beskrivelse" rows="4" required></textarea>
-                    <label>Upload Image:</label>
-                    <div class="file-input-container">
-                        <input type="file" name="photo" accept="image/*" class="file-input">
-                        <label class="file-label"><span>Select File</span></label>
-                    </div>
-                    <button type="button" class="deleteSection" data-index="${sectionCount}">Delete Section</button>
-                `;
-                newSections.appendChild(newSection);
-            });
+    const newSections = document.getElementById('newSections');
+    const sectionCount = document.querySelectorAll('.newSection').length;
+
+    const newSection = document.createElement('div');
+    newSection.className = 'newSection';
+    newSection.id = `section-${sectionCount}`;
+    newSection.innerHTML = `
+        <h3>New Section</h3>
+        <label>Overskrift:</label>
+        <input type="text" name="Overskrift[]" required>
+        <label>Beskrivelse:</label>
+        <textarea name="Beskrivelse[]" rows="4" required></textarea>
+        <label>Upload Image:</label>
+        <div class="file-input-container">
+            <input type="file" name="newPhoto" accept="image/*" class="file-input" id="photo${sectionCount}" onchange="updateLabel(this)">
+            <label for="photo${sectionCount}" class="file-label"><span>Select File</span></label>
+        </div>
+        <input type="hidden" name="existingImages[]" value="">
+        <input type="hidden" name="deletedImages[]" value="" class="deletedImageInput">
+        <button type="button" class="deleteSection" data-index="${sectionCount}">Delete Section</button>
+    `;
+    newSections.appendChild(newSection);
+});
     
             // Event delegation for delete buttons
             document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('deleteSection')) {
-                    const sectionIndex = event.target.getAttribute('data-index');
-                    const sectionToDelete = document.getElementById(`section-${sectionIndex}`);
-                    if (sectionToDelete) {
-                        sectionToDelete.remove(); // Remove the section from the DOM
-                    }
-                }
-            });
+    if (event.target.classList.contains('deleteSection')) {
+        const sectionIndex = event.target.getAttribute('data-index');
+        const sectionToDelete = document.getElementById(`section-${sectionIndex}`);
+        if (sectionToDelete) {
+            // Mark the image for deletion
+            const deletedImageInput = sectionToDelete.querySelector('.deletedImageInput');
+            const existingImageInput = sectionToDelete.querySelector('input[type="hidden"][name="existingImages[' + sectionIndex + ']"]');
+            deletedImageInput.value = existingImageInput.value; // Preserve existing image before deletion
+
+            sectionToDelete.remove(); // Remove the section from the DOM
+        }
+    }
+});
         </script>
     
     </body>

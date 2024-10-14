@@ -28,16 +28,6 @@
                     <img src="/uploads/<%= guide.bilde[index] %>" alt="<%= heading %> image" class="uploads" />
                 <% } %>
             <% }); %>
-    
-            <!-- Conditionally render edit and delete buttons if the logged-in user is the author -->
-            <% if (username === guide.author) { %>
-                <div class="action-buttons">
-                    <a href="/edit-guide/<%= guide._id %>" class="edit-button">Edit</a>
-                    <form action="/delete-guide/<%= guide._id %>" method="POST" style="display:inline;">
-                        <button type="submit" class="delete-button">Delete</button>
-                    </form>
-                </div>
-            <% } %>
         </div>
 
     </body>
