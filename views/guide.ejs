@@ -15,10 +15,11 @@
         </div>
     
         <div class="main-content">
-            <h1><%= guide.tittel %></h1>
-            <h3>Tags: <%= guide.tag.join(", ") %></h3>
-            <p>Author: <%= guide.author %></p>
-    
+            <div class="main-info">
+                <h1><%= guide.tittel %></h1>
+                <h3>Tags: <%= guide.tag.join(", ") %></h3>
+                <p>Author: <%= guide.author %></p>
+            </div>
             <% guide.overskrift.forEach((heading, index) => { %>
                 <h2 id="heading-<%= index %>"><%= heading %></h2>
                 <p><%= guide.beskrivelse[index] %></p>

@@ -15,8 +15,6 @@
     --button-hover-shadow: 0 8px 20px rgba(211, 47, 47, 0.5); 
 }
 
-
-
 body {
     background-color: var(--background-color);
     font-family: arial, sans-serif;
@@ -153,9 +151,8 @@ li:first-child {
 /* Guide */
 
 .uploads {
-    display: block;
     margin: 0 auto;
-    max-width: 100%;
+    max-width: 90%;
 }
 
 .action-buttons {
@@ -176,20 +173,6 @@ li:first-child {
     transition: background-color 0.3s, box-shadow 0.3s;
     font-size: 16px;
     box-shadow: var(--button-shadow);
-}
-
-.edit-button {
-    margin-top: 1rem;
-    padding: 12px;
-    background-color: var(--button-background-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    font-size: 16px;
-    box-shadow: var(--button-shadow);
-    text-decoration: none;
 }
 
 .nav-side {
@@ -242,6 +225,14 @@ li:first-child {
     height: calc(100vh - var(--navbar-height));
     transition: margin-left 0.3s ease;
     padding-top: calc(var(--navbar-height));
+}
+
+.main-info h1 {
+    margin-top: 3rem;
+}
+
+.main-info h3 {
+    padding: 1rem 1rem;
 }
 
 .guide-h1 {
@@ -403,11 +394,80 @@ p {
 
 /* Edit */
 
+.edit-button {
+    margin-top: 1rem;
+    padding: 12px;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 16px;
+    box-shadow: var(--button-shadow);
+    text-decoration: none;
+}
+
 .edit {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    margin-top: 7rem;
+    font-size: 1.8rem;
+    width: 100%;
+    max-width: 800px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+    background-color: var(--input-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
+
+.deleteSection {
+    min-width: 50%;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border-radius: var(--button-border-radius);
+    border: 2px solid var(--border-color);
+}
+
+.section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    font-size: 1.8rem;
+    width: 100%;
+    max-width: 800px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+    background-color: var(--input-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+#sections {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    font-size: 1.8rem;
+    width: 100%;
+    max-width: 800px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+    background-color: var(--input-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+#end button{
+    font-size: 20px;
+}
+
 
 .edit button {
     font-size: 100px;
@@ -417,30 +477,15 @@ p {
 .edit a {
     text-decoration: none;
     color: var(--background-color);
+    cursor: text;
 }
 
-.edit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 7rem;
-    font-size: 1.8rem; /* Using rem for font size */
-    width: 100%;
-    max-width: 800px; /* Limiting the maximum width */
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1rem;
-    padding-bottom: 2rem;
-    background-color: var(--input-background-color);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
 
 .edit label {
     color: var(--text-color);
     font-size: 1.1rem; /* Using rem for consistency */
     margin-top: 1rem;
-    width: 100%;
+    width: 107%;
     text-align: left;
 }
 
@@ -490,6 +535,30 @@ p {
 .edit textarea::-webkit-scrollbar {
     display: none;
 }
+
+.file-input-container {
+    width: 107%; /* Ensure it takes the full width */
+    margin-top: 0.5rem; /* Align with other elements */
+    margin-bottom: 2rem;
+}
+
+.file-label {
+    padding: 10px 20px;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.file-input {
+    display: none; /* Keep the default file input hidden */
+}
+
+.file-label.selected {
+    background-color: var(--button-hover-background-color); /* Change color if file is 'selected' */
+}
+
 
 /* Dashboard */
 
@@ -624,8 +693,7 @@ form {
 .newSection label {
     margin-top: 1.5rem;
     font-size: 1.1rem;
-    width: 100%;
-    text-align: left;
+    width: 107%;
 }
 
 .newSection h2 {

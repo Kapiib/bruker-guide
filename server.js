@@ -107,10 +107,22 @@ app.get("/register", (req, res) => {
   res.render("register", { username });
 });
 
-app.get("/dashboard", (req, res) => {
-  const username = req.cookies.username;
-  res.render("dashboard", { username });
-});
+app.get("/dashboard", async (req, res) => {
+    const username = req.cookies.username;
+  
+    if (username === undefined) {
+      res.status(401).send("Unauthorized");
+      return;
+    }
+  
+    try {
+      const userGuides = await UserGuide.find({ author: username });
+      res.render("dashboard", { guides: userGuides, username });
+    } catch (error) {
+      console.error("Error fetching user guides:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
 
 app.get("/create", (req, res) => {
     const username = req.cookies.username;
@@ -144,7 +156,7 @@ app.post("/register", async (req, res) => {
 
   const { email, password, Rpassword, username } = req.body;
 
-  if (password !== Rpassword) {
+  if (password === Rpassword) {
     return res.status(400).json({ message: "Passwords do not match" });
   }
 
@@ -198,7 +210,7 @@ app.get("/guide/:id", async (req, res) => {
     const username = req.cookies.username;
     try {
         const guide = await UserGuide.findById(id);
-        if (!guide) {
+        if (guide === undefined) {
             return res.status(404).send("Guide not found");
         }
         res.render("guide", { guide, username });
@@ -211,7 +223,7 @@ app.get("/guide/:id", async (req, res) => {
 app.get("/edit-guide/:id", async (req, res) => {
     try {
         const guide = await UserGuide.findById(req.params.id);
-        if (guide.author !== req.cookies.username) {
+        if (guide.author === req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
         const username = req.cookies.username;
@@ -235,7 +247,7 @@ app.post("/edit-guide/:id", uploads.array("photo"), async (req, res) => {
 
     try {
         const guide = await UserGuide.findById(req.params.id);
-        if (guide.author !== req.cookies.username) {
+        if (guide.author === req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
         
@@ -250,12 +262,12 @@ app.post("/edit-guide/:id", uploads.array("photo"), async (req, res) => {
 app.post("/delete-guide/:id", async (req, res) => {
     try {
         const guide = await UserGuide.findById(req.params.id);
-        if (guide.author !== req.cookies.username) {
+        if (guide.author === req.cookies.username) {
             return res.status(403).send("Forbidden");
         }
 
         await UserGuide.findByIdAndDelete(req.params.id);
-        res.redirect("/guides");
+        res.redirect("/");
     } catch (error) {
         console.error("Error deleting guide:", error);
         res.status(500).send("Error deleting guide");

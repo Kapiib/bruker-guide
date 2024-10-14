@@ -4,45 +4,100 @@
         <%- include('./partials/head'); %>
     </head>
     <body>
-
-        <%- include ('./partials/nav'); %>
-
-        <div class="edit">
-            <form action="/edit-guide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
-                <label for="Tittel">Title:</label>
-                <input type="text" name="Tittel" value="<%= guide.tittel %>" required />
     
-                <label for="Tag">Tag:</label>
-                <input type="text" name="Tag" value="<%= guide.tag.join(', ') %>" />
+        <%- include('./partials/nav'); %>
     
-                <label for="Overskrift">Overskrift:</label>
-                <input type="text" name="Overskrift" value="<%= guide.overskrift.join(', ') %>" />
+        <form class="formContainer" action="/edit-guide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
+            <div>
+                <div class="edit">
+                    <label for="Tittel">Title</label>
+                    <input type="text" name="Tittel" value="<%= guide.tittel %>" required />
     
-                <label for="Beskrivelse">Beskrivelse:</label>
-                <textarea name="Beskrivelse" required><%= guide.beskrivelse.join(', ') %></textarea>
-    
-                <label for="photo">Upload Images:</label>
-                <input type="file" name="photo" multiple />
-    
-                <button type="submit">Save Changes</button>
-
-                <div class="newSection">
-                    <h2>Seksjon</h2>
-        
-                    <label for="">Overskrift</label>
-                        <input type="text" name="Overskrift" required>
-                    <label for="">Beskrivelse</label>
-                        <textarea name="Beskrivelse" rows="4" required></textarea>
-                    <label for="">Bilde</label>
-                        <input type="file" name="photo" id="photo" accept="image/*">
-                    </div>
+                    <label for="Tag">Tag</label>
+                    <input type="text" name="Tag" value="<%= guide.tag.join(', ') %>" />
                 </div>
-                
-            </form>
-
-            
-        </div>
-
-        
+    
+                <% if (guide.overskrift && guide.overskrift.length) { %>
+                    <% guide.overskrift.forEach((overskrift, index) => { %>
+                        <div class="newSection" id="section-<%= index %>">
+                            <h3>Section <%= index + 1 %></h3>
+    
+                            <label for="Overskrift<%= index %>">Overskrift</label>
+                            <input type="text" name="Overskrift" value="<%= overskrift %>" required>
+    
+                            <label for="Beskrivelse<%= index %>">Beskrivelse</label>
+                            <textarea name="Beskrivelse" required><%= guide.beskrivelse[index] %></textarea>
+    
+                            <label for="photo<%= index %>">Bilde</label>
+                            <div class="file-input-container">
+                                <input type="file" name="photo" accept="image/*" class="file-input" id="photo<%= index %>" onchange="updateLabel(this)">
+                                <label for="photo<%= index %>" class="file-label <% if (guide.bilde[index]) { %> selected <% } %>">
+                                    <% if (guide.bilde[index]) { %>
+                                        <span>File Selected: <%= guide.bilde[index] %></span>
+                                    <% } else { %>
+                                        <span>Select File</span>
+                                    <% } %>
+                                </label>
+                            </div>
+                            <button type="button" class="deleteSection" data-index="<%= index %>">Delete Section</button>
+                        </div>
+                    <% }); %>
+                <% } %>
+    
+                <div id="newSections"></div>
+    
+                <div id="end">
+                    <button type="button" class="end" id="addSection">Add New Section</button>
+                    <button type="submit" class="end">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    
+        <script>
+            function updateLabel(input) {
+                const label = input.nextElementSibling; // Get the associated label
+                if (input.files.length > 0) {
+                    label.classList.add('selected');
+                    label.innerHTML = `<span>File Selected: ${input.files[0].name}</span>`;
+                } else {
+                    label.classList.remove('selected');
+                    label.innerHTML = `<span>Select File</span>`;
+                }
+            }
+    
+            document.getElementById('addSection').addEventListener('click', function() {
+                const newSections = document.getElementById('newSections');
+                const sectionCount = newSections.children.length;
+    
+                const newSection = document.createElement('div');
+                newSection.className = 'newSection';
+                newSection.innerHTML = `
+                    <h3>New Section</h3>
+                    <label>Overskrift:</label>
+                    <input type="text" name="Overskrift" required>
+                    <label>Beskrivelse:</label>
+                    <textarea name="Beskrivelse" rows="4" required></textarea>
+                    <label>Upload Image:</label>
+                    <div class="file-input-container">
+                        <input type="file" name="photo" accept="image/*" class="file-input">
+                        <label class="file-label"><span>Select File</span></label>
+                    </div>
+                    <button type="button" class="deleteSection" data-index="${sectionCount}">Delete Section</button>
+                `;
+                newSections.appendChild(newSection);
+            });
+    
+            // Event delegation for delete buttons
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('deleteSection')) {
+                    const sectionIndex = event.target.getAttribute('data-index');
+                    const sectionToDelete = document.getElementById(`section-${sectionIndex}`);
+                    if (sectionToDelete) {
+                        sectionToDelete.remove(); // Remove the section from the DOM
+                    }
+                }
+            });
+        </script>
+    
     </body>
 </html>
