@@ -92,21 +92,30 @@
     newSections.appendChild(newSection);
 });
     
-            // Event delegation for delete buttons
+             // Modified event listener for delete buttons
             document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('deleteSection')) {
-        const sectionIndex = event.target.getAttribute('data-index');
-        const sectionToDelete = document.getElementById(`section-${sectionIndex}`);
-        if (sectionToDelete) {
-            // Mark the image for deletion
-            const deletedImageInput = sectionToDelete.querySelector('.deletedImageInput');
-            const existingImageInput = sectionToDelete.querySelector('input[type="hidden"][name="existingImages[' + sectionIndex + ']"]');
-            deletedImageInput.value = existingImageInput.value; // Preserve existing image before deletion
+                if (event.target.classList.contains('deleteSection')) {
+                    const sectionIndex = event.target.getAttribute('data-index');
+                    const sectionToDelete = document.getElementById(`section-${sectionIndex}`);
+                    if (sectionToDelete && confirm('Are you sure you want to delete this section?')) {
+                        // Mark all inputs in this section as deleted
+                        const inputs = sectionToDelete.querySelectorAll('input, textarea');
+                        inputs.forEach(input => {
+                            input.name = `deleted_${input.name}`;
+                        });
 
-            sectionToDelete.remove(); // Remove the section from the DOM
-        }
-    }
-});
+                        // Mark the image for deletion
+                        const deletedImageInput = sectionToDelete.querySelector('.deletedImageInput');
+                        const existingImageInput = sectionToDelete.querySelector('input[name^="existingImages"]');
+                        if (existingImageInput) {
+                            deletedImageInput.value = existingImageInput.value;
+                        }
+
+                        // Hide the section
+                        sectionToDelete.style.display = 'none';
+                    }
+                }
+            });
         </script>
     
     </body>

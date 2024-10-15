@@ -11,17 +11,13 @@ require("dotenv").config();
 const Schema = mongoose.Schema;
 
 const diskStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
+    destination: function (req, file, cb) {
     cb(null, "./uploads");
   },
 
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
     console.log("EXT", ext);
-
-    // if (ext !== ".png") {
-    //     return cb(new Error("Only Png file accepted"))
-    // }
 
     const fileName = file.originalname;
 
@@ -249,7 +245,7 @@ app.post("/edit-guide/:id", uploadFields, async (req, res) => {
   console.log("Files:", req.files);
   console.log("Body:", req.body);
 
-  const { Tittel, Tag, existingImages, deletedImages } = req.body;
+  const { Tittel, Tag, existingImages, deletedImages, sectionId } = req.body;
 
   // Handle existing images
   let updatedImages = existingImages ? (Array.isArray(existingImages) ? existingImages : [existingImages]) : [];
@@ -308,7 +304,7 @@ app.post("/delete-guide/:id", async (req, res) => {
 
         await UserGuide.findByIdAndDelete(req.params.id);
         res.redirect("/dashboard");
-    } catch (error) {
+    } catch (error) {   
         console.error("Error deleting guide:", error);
         res.status(500).send("Error deleting guide");
     }
