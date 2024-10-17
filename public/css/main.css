@@ -20,6 +20,7 @@ body {
     font-family: arial, sans-serif;
     margin: 0%;
     padding: 0%;
+    padding-top: var(--navbar-height);
 }
 
 html {
@@ -27,11 +28,97 @@ html {
     scrollbar-width: none;
 }
 
-h1 {
+/* Index */
+
+.index-container {
+    max-width: 1200px;
+    margin: 80px auto 0;
+    padding: 0 20px;
+}
+
+.index-container h1 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.search-div {
     display: flex;
     justify-content: center;
-    margin-top: 7rem;
+    margin-bottom: 3rem;
+}
+
+.search-div input {
+    width: 50%;
+    max-width: 500px;
+    padding: 12px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--input-background-color);
     color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-div input:focus {
+    outline: none;
+    border-color: var(--border-highlight-color);
+    box-shadow: 0 0 10px rgba(229, 115, 115, 0.3);
+}
+
+.info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.box {
+    background-color: var(--nav-background-color);
+    border-radius: 10px;
+    padding: 1.5rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 200px; /* Fixed width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.link {
+    display: block; /* Ensures full width */
+    padding: 1rem; 
+    font-size: 17px;
+    color: var(--text-color);
+    text-decoration: none; 
+    border-radius: 10px; 
+    background-color: rgba(255, 255, 255, 0.2); 
+    transition: background-color 0.3s, transform 0.3s; 
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    text-align: center;
+}
+
+.link:hover {
+    background-color: rgba(255, 255, 255, 0.5); 
+    transform: scale(1.05);
+}
+
+h1 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+    text-align: center;
+    font-size: 2.5rem;
 }
 
 h3 {
@@ -86,463 +173,337 @@ li:first-child {
     width: 6rem;
 }
 
-.info {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 1rem; 
-    padding: 1rem; 
-}
-
-.box {
-    text-align: center;
-    padding: 2rem; 
-}
-
-.link {
-    padding: 2rem 4rem; 
-    font-size: 17px;
-    color: var(--text-color);
-    text-decoration: none; 
-    border-radius: 10px; 
-    background-color: rgba(255, 255, 255, 0.2); 
-    transition: background-color 0.3s, transform 0.3s; 
-}
-
-.link:hover {
-    background-color: rgba(255, 255, 255, 0.5); 
-    transform: scale(1.05); 
-}
-
-.box:hover {
-    border-color: var(--border-highlight-color); 
-}
-
-.search-div {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-}
-
-.search-div input {
-    border: var(--text-color) solid 2px;
-    border-radius: 5px;
-    margin-top: 5rem;
-    width: 15%;
-    padding: 6px 10px;
-    background: var(--input-background-color);
-    font-size: 17px;
-    color: white;
-}
-
-.search-div button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: -40px;
-    margin-top: 5rem;
-}
-
-.search-div button i {
-    font-size: 18px;
-    color: var(--icon-color);
-}
-
 /* Guide */
 
-.uploads {
-    margin: 0 auto;
-    max-width: 90%;
-}
-
-.action-buttons {
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: space-evenly;
-    padding-bottom: 1rem;
-}
-
-.delete-button {
-    margin-top: 1rem;
-    padding: 12px;
-    background-color: var(--button-background-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    font-size: 16px;
-    box-shadow: var(--button-shadow);
-}
-
 .nav-side {
-    display: grid;
-    grid-template-rows: auto;
-    align-content: flex-start;
-    width: 250px; 
-    background-color: var(--nav-background-color); 
+    width: 250px;
+    background-color: var(--nav-background-color);
     color: var(--text-color);
-    padding: 10px;
+    padding: 20px;
     position: fixed;
-    top: var(--navbar-height); 
-    height: calc(100vh - var(--navbar-height)); 
-    left: -170px;  
+    top: var(--navbar-height);
+    height: calc(100vh - var(--navbar-height));
+    left: -200px;
     transition: left 0.3s ease;
     z-index: 1;
     overflow-y: auto;
     scrollbar-width: none;
-}
-
-.nav-side:hover ~ .main-content {
-    margin-left: 280px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-side:hover {
-    left: 0; 
+    left: 0;
 }
 
 .nav-side a {
-    text-align: center;
     color: var(--text-color);
-    padding: 2.5rem;
-    margin-bottom: 2rem;
+    padding: 15px;
+    margin-bottom: 10px;
     text-decoration: none;
     display: block;
     font-size: 14px;
-    border: solid 2px var(--border-color);
+    border: 1px solid var(--border-color);
     border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: var(--input-background-color);
 }
 
 .nav-side a:hover {
     background-color: var(--nav-hover-background-color);
-    border-radius: 5px;
+    transform: translateX(5px);
 }
 
 .main-content {
-    display: grid;
-    align-items: baseline;
+    margin-left: 6rem;
     padding: 20px;
-    height: calc(100vh - var(--navbar-height));
     transition: margin-left 0.3s ease;
-    padding-top: calc(var(--navbar-height));
+}
+
+.nav-side:hover ~ .main-content {
+    margin-left: 270px;
+}
+
+.main-info {
+    background-color: var(--nav-background-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    top: var(--navbar-height);
+    z-index: 1;
 }
 
 .main-info h1 {
-    margin-top: 3rem;
+    margin-top: 0;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    text-align: center;
 }
 
 .main-info h3 {
-    padding: 1rem 1rem;
+    color: var(--border-highlight-color);
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
 }
 
-.guide-h1 {
-    margin-top: 3rem;
-    margin-bottom: -1rem;
-}
-
-h2 {
-    padding-top: 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.main-info p {
     color: var(--text-color);
+    font-size: 1rem;
+    text-align: center;
+    margin: 10px 0;
 }
 
-p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.main-content h2 {
+    color: var(--border-highlight-color);
+    font-size: 2rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.main-content p {
     color: var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.uploads {
+    display: block;
+    margin: 20px auto;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .nav-side {
+        left: -250px;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .nav-side:hover ~ .main-content {
+        margin-left: 0;
+    }
 }
 
 /* Register */
 
-.register {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--input-background-color);
-    padding: 20px;
-    border-radius: 1rem;
+.register-container {
+    max-width: 400px;
+    margin: 80px auto 0;
+    padding: 2rem;
+    background-color: var(--nav-background-color);
+    border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    max-width: 300px;
-    margin: 50px auto;
 }
 
-.register input[type="text"],
-.register input[type="password"] {
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-input-group {
+    margin-bottom: 1.5rem;
+}
+
+.register-input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.register-input-group input {
+    width: 94%;
     padding: 10px;
-    margin: 10px 0;
     border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
+    border-radius: 5px;
     background-color: var(--input-background-color);
     color: var(--text-color);
     font-size: 16px;
 }
 
-.register input[type="text"]:focus,
-.register input[type="password"]:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
-}
-
-.register input[type="submit"] {
-    margin-top: 1rem;
+.register-submit-btn {
+    width: 100%;
     padding: 12px;
     background-color: var(--button-background-color);
     color: var(--text-color);
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
     font-size: 16px;
-    box-shadow: var(--button-shadow);
 }
 
-.register input[type="submit"]:hover {
+.register-submit-btn:hover {
     background-color: var(--button-hover-background-color);
     box-shadow: var(--button-hover-shadow);
 }
 
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-color);
+}
+
+.login-link a {
+    color: var(--border-highlight-color);
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
 /* Login */
+
+.login-container {
+    max-width: 400px;
+    margin: 80px auto 0;
+    padding: 2rem;
+    background-color: var(--nav-background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.login-container h1 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
 
 .login {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: var(--input-background-color);
-    padding: 20px;
-    border-radius: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    max-width: 300px;
-    margin: 50px auto;
+    align-items: flex-start;
 }
 
-.login input[type="text"],
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.login input[type="email"],
 .login input[type="password"] {
+    width: 172%;
     padding: 10px;
-    margin: 10px 0;
     border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
+    border-radius: 5px;
     background-color: var(--input-background-color);
     color: var(--text-color);
     font-size: 16px;
 }
 
-.login input[type="text"]:focus,
+.login input[type="email"]:focus,
 .login input[type="password"]:focus {
     border-color: var(--border-highlight-color);
     outline: none;
 }
 
-.login input[type="submit"] {
-    margin-top: 1rem;
+.submit-btn {
+    width: 100%;
     padding: 12px;
     background-color: var(--button-background-color);
     color: var(--text-color);
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
     font-size: 16px;
-    box-shadow: var(--button-shadow);
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.login input[type="submit"]:hover {
+.submit-btn:hover {
     background-color: var(--button-hover-background-color);
     box-shadow: var(--button-hover-shadow);
 }
 
-/* Register */
-
-.register input[type="text"],
-.register input[type="email"],
-.register input[type="password"] {
-    padding: 10px;
-    margin: 10px 0;
-    border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
-    background-color: var(--input-background-color);
+.register-link {
+    text-align: center;
+    margin-top: 1.5rem;
     color: var(--text-color);
-    font-size: 16px;
 }
 
-.register input[type="text"]:focus,
-.register input[type="email"]:focus,
-.register input[type="password"]:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
+.register-link a {
+    color: var(--border-highlight-color);
+    text-decoration: none;
 }
 
-.register input[type="submit"] {
-    margin-top: 1rem;
-    padding: 12px;
-    background-color: var(--button-background-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    font-size: 16px;
-    box-shadow: var(--button-shadow);
-}
-
-.register input[type="submit"]:hover {
-    background-color: var(--button-hover-background-color);
-    box-shadow: var(--button-hover-shadow);
+.register-link a:hover {
+    text-decoration: underline;
 }
 
 /* Edit */
 
-.edit-button {
-    margin-top: 1rem;
-    padding: 12px;
-    background-color: var(--button-background-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    font-size: 16px;
-    box-shadow: var(--button-shadow);
-    text-decoration: none;
-}
-
-.edit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 7rem;
-    font-size: 1.8rem;
-    width: 100%;
-    max-width: 800px; 
-    margin-left: auto;
-    margin-right: auto;
+.edit-page .edit-container {
+    max-width: 800px;
+    margin: 80px auto 0;
     padding: 2rem;
     background-color: var(--input-background-color);
     border-radius: 0.5rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-.deleteSection {
-    min-width: 50%;
-    background-color: var(--button-background-color);
-    color: var(--text-color);
-    border-radius: var(--button-border-radius);
-    border: 2px solid var(--border-color);
-}
-
-.section{
+.edit-page .edit-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 5rem;
-    font-size: 1.8rem;
-    width: 100%;
-    max-width: 800px; 
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2rem;
-    background-color: var(--input-background-color);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-#sections {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5rem;
-    font-size: 1.8rem;
-    width: 100%;
-    max-width: 800px; 
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2rem;
-    background-color: var(--input-background-color);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-#end button{
-    font-size: 20px;
-}
-
-
-.edit button {
-    font-size: 100px;
-    border-radius: 20px;
-}
-
-.edit a {
-    text-decoration: none;
-    color: var(--background-color);
-    cursor: text;
-}
-
-
-.edit label {
-    color: var(--text-color);
-    font-size: 1.1rem; /* Using rem for consistency */
-    margin-top: 1rem;
-    width: 107%;
-    text-align: left;
-}
-
-.edit h2 {
-    margin-top: 0;
-    padding-top: 1rem;
-    text-align: center;
-    font-size: 2rem; /* Adjusting heading size */
-}
-
-.edit input {
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    font-size: 1rem;
-    width: 100%;
-    border-radius: 0.5rem;
-    border: 2px solid var(--border-color);
-    background-color: var(--input-background-color);
-    color: var(--text-color);
-}
-
-.edit input:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
-}
-
-.edit textarea {
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    font-size: 1rem;
-    min-width: 100%; 
-    border-radius: 0.5rem;
-    border: 2px solid var(--border-color);
-    background-color: var(--input-background-color);
-    color: var(--text-color);
-    resize: none;
-    line-height: 1.5rem;
-}
-
-.edit textarea:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
-}
-
-.edit textarea::-webkit-scrollbar {
-    display: none;
-}
-
-.file-input-container {
-    width: 107%; /* Ensure it takes the full width */
-    margin-top: 0.5rem; /* Align with other elements */
+.edit-page .edit-main,
+.edit-page .edit-section {
     margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--nav-background-color);
+    border-radius: 0.5rem;
 }
 
-.file-label {
+.edit-page .edit-input-group {
+    margin-bottom: 1.5rem;
+}
+
+.edit-page .edit-input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.edit-page .edit-input-group input,
+.edit-page .edit-input-group textarea {
+    width: 96%;
+    padding: 0.8rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    resize: none;
+}
+
+.edit-page .edit-input-group input:focus,
+.edit-page .edit-input-group textarea:focus {
+    border-color: var(--border-highlight-color);
+    outline: none;
+}
+
+.edit-page .edit-file-input-container {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.edit-page .edit-file-label {
+    display: inline-block;
     padding: 10px 20px;
     background-color: var(--button-background-color);
     color: var(--text-color);
@@ -551,288 +512,283 @@ p {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.file-input {
-    display: none; /* Keep the default file input hidden */
-}
-
-.file-label.selected {
-    background-color: var(--button-hover-background-color); /* Change color if file is 'selected' */
-}
-
-
-/* Dashboard */
-
-.guide-card {
-    width: 100%;
-    max-width: 300px;
-    margin: 1rem 1rem;
-    border-radius: 0.5rem;
-    border: 5px solid var(--border-color);
-    box-shadow: 0 4px 15px white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .guide-card h2 {
-    margin: 0 0 1rem;
-    font-size: 1.5rem;
-  }
-  .guide-card-actions {
-    margin-top: 1rem;
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  .guide-card button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 0;
-  }
-  .view-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-decoration: none;
-  }
-  .edit-button {
-    background-color: #2196F3;
-    color: white;
-    margin-top: 0;
-    padding: 0.5rem 1rem;
-  }
-  .delete-button {
-    background-color: #f44336;
-    color: white;
-  }
-  .guide-card button:hover {
-    opacity: 0.8;
-  }
-
-  /* aswesfdrsgeddfrhg */
-
-  .info {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 1rem; 
-    padding: 1rem; 
-}
-
-.box {
-    text-align: center;
-    padding: 2rem; 
-}
-
-.link {
-    padding: 2rem 3rem; 
-    font-size: 17px;
-    color: var(--text-color);
-    text-decoration: none; 
-    border-radius: 10px; 
-    background-color: rgba(255, 255, 255, 0.2); 
-    transition: background-color 0.3s, transform 0.3s; 
-}
-
-.link:hover {
-    background-color: rgba(255, 255, 255, 0.5); 
-    transform: scale(1.05); 
-}
-
-.box:hover {
-    border-color: var(--border-highlight-color); 
-}
-
-.search-div {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-}
-
-.search-div input {
-    border: var(--text-color) solid 2px;
-    border-radius: 5px;
-    margin-top: 5rem;
-    width: 15%;
-    padding: 6px 10px;
-    background: var(--input-background-color);
-    font-size: 17px;
-    color: white;
-}
-
-.search-div button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: -40px;
-    margin-top: 5rem;
-}
-
-.search-div button i {
-    font-size: 18px;
-    color: var(--icon-color);
-}
-
-/* Create */
-
-.create {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.create button {
-    font-size: 100px;
-    border-radius: 20px;
-}
-
-.create a {
-    text-decoration: none;
-    color: var(--background-color);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#create {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5rem;
-    font-size: 1.8rem; /* Using rem for font size */
-    width: 100%;
-    max-width: 800px; /* Limiting the maximum width */
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2rem;
-    background-color: var(--input-background-color);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-#create label {
-    color: var(--text-color);
-    font-size: 1.1rem; /* Using rem for consistency */
-    margin-top: 1rem;
-    width: 100%;
-    text-align: left;
-}
-
-#create h2 {
-    margin-top: 0;
-    padding-top: 1rem;
-    text-align: center;
-    font-size: 2rem; /* Adjusting heading size */
-}
-
-#create input {
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    font-size: 1rem;
-    width: 100%;
-    border-radius: 0.5rem;
-    border: 2px solid var(--border-color);
-    background-color: var(--input-background-color);
-    color: var(--text-color);
-}
-
-#create input:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
-}
-
-.newSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.8rem; /* Using rem */
-    color: var(--text-color);
-    width: 100%;
-    margin-top: 3rem;
-    padding: 2rem;
-    background-color: var(--input-background-color);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.newSection input {
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    font-size: 1rem;
-    width: 100%;
-    border-radius: 0.5rem;
-    border: 2px solid var(--border-color);
-    background-color: var(--input-background-color);
-    color: var(--text-color);
-}
-
-.newSection input:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
-}
-
-.newSection textarea {
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    font-size: 1rem;
-    min-width: 100%; 
-    border-radius: 0.5rem;
-    border: 2px solid var(--border-color);
-    background-color: var(--input-background-color);
-    color: var(--text-color);
-    resize: none;
-    line-height: 1.5rem;
-}
-
-.newSection textarea:focus {
-    border-color: var(--border-highlight-color);
-    outline: none;
-}
-
-.newSection textarea::-webkit-scrollbar {
+.edit-page .edit-file-input {
     display: none;
 }
 
-.newSection label {
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
-    width: 107%;
+.edit-page .edit-file-label.selected {
+    background-color: var(--button-hover-background-color);
 }
 
-.newSection h2 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    padding-top: 1rem;
-    font-size: 2rem;
-}
-
-.SectionButton {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.5rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+.edit-page .edit-delete-section,
+.edit-page .edit-add-section,
+.edit-page .edit-save-changes {
+    padding: 10px 20px;
     background-color: var(--button-background-color);
     color: var(--text-color);
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 16px;
+    margin-top: 1rem;
 }
 
-.SectionButton:hover {
+.edit-page .edit-delete-section:hover,
+.edit-page .edit-add-section:hover,
+.edit-page .edit-save-changes:hover {
     background-color: var(--button-hover-background-color);
     box-shadow: var(--button-hover-shadow);
+}
+
+.edit-page .edit-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.edit-page h2,
+.edit-page h3 {
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.edit-page h2 {
+    font-size: 2rem;
+}
+
+.edit-page h3 {
+    font-size: 1.5rem;
+}
+
+/* Dashboard */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 80px auto;
+}
+
+.dashboard-container h1 {
+    text-align: center;
+    color: var(--text-color);
+}
+
+.dashboard-search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.dashboard-search input {
+    width: 50%;
+    max-width: 500px;
+    padding: 12px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.dashboard-search input:focus {
+    outline: none;
+    border-color: var(--border-highlight-color);
+    box-shadow: 0 0 10px rgba(229, 115, 115, 0.3);
+}
+
+.dashboard-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.guide-card {
+    background-color: var(--nav-background-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 7rem; /* Set a fixed height */
+}
+
+.guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.guide-card h2 {
+   color : var(--text-color) ;
+   font-size :1.2rem ;
+   margin-top : .5rem ;
+   margin-bottom : .5rem ;
+   text-align : center ;
+}
+
+.guide-card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto; /* Push the actions to the bottom */
+}
+
+.view-button, .edit-button, .delete-button {
+    padding: 8px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--text-color);
+    flex: 1;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.view-button {
+    background-color: #4CAF50; /* Green */
+}
+
+.edit-button {
+    background-color: #2196F3; /* Blue */
+}
+
+.delete-button {
+    background-color: #f44336; /* Red */
+}
+
+.view-button:hover {
+    background-color: #45a049; /* Darker green */
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* Green glow */
+}
+
+.edit-button:hover {
+    background-color: #1e88e5; /* Darker blue */
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.5); /* Blue glow */
+}
+
+.delete-button:hover {
+    background-color: #da190b; /* Darker red */
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5); /* Red glow */
+}
+
+@media (max-width: 768px) {
+    .dashboard-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .guide-card {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .dashboard-search input {
+        width: 80%;
+    }
+}
+
+/* Create */
+
+.create-container {
+    max-width: 800px;
+    margin: 80px auto 0;
+    padding: 2rem;
+    background-color: var(--nav-background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.create-container h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    padding-top: 0;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.create-form input[type="text"],
+.create-form textarea {
+    width: 97%;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    font-size: 16px;
+    resize: none;
+}
+
+.create-form input[type="text"]:focus,
+.create-form textarea:focus {
+    border-color: var(--border-highlight-color);
+    outline: none;
+}
+
+.create-form input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.file-label:hover {
+    background-color: var(--button-hover-background-color);
+    box-shadow: var(--button-hover-shadow);
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.send, .SectionButton {
+    padding: 12px 24px;
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.send:hover, .SectionButton:hover {
+    background-color: var(--button-hover-background-color);
+    box-shadow: var(--button-hover-shadow);
+}
+
+.newSection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border-color);
 }

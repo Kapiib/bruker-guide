@@ -188,31 +188,30 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/create", uploads.array("photo"), async (req, res) => {
-    if (req.files.length === 0) {
-      return res.status(400).send("No files were uploaded.");
-    }
-  
-    const { Tittel, Tag, Overskrift, Beskrivelse } = req.body;
-    const author = req.cookies.username;
-  
-    const newUserGuide = new UserGuide({
+  const { Tittel, Tag, Overskrift, Beskrivelse } = req.body;
+  const author = req.cookies.username;
+
+  // Check if files are uploaded; if not, handle gracefully by assigning an empty array
+  const uploadedImages = req.files ? req.files.map((file) => file.filename) : [];
+
+  const newUserGuide = new UserGuide({
       tittel: Tittel,
       tag: Tag,
-      overskrift: Overskrift,
-      beskrivelse: Beskrivelse,
-      bilde: req.files.map((file) => file.filename),
+      overskrift: Array.isArray(Overskrift) ? Overskrift : [Overskrift], // Ensure arrays
+      beskrivelse: Array.isArray(Beskrivelse) ? Beskrivelse : [Beskrivelse],
+      bilde: uploadedImages, // Set images to the array of filenames or an empty array
       author: author,
-    });
-  
-    try {
+  });
+
+  try {
       const result = await newUserGuide.save();
       console.log("Guide saved:", result);
       res.redirect("/dashboard");
-    } catch (error) {
+  } catch (error) {
       console.error("Error saving guide:", error);
       res.status(500).send("Error saving guide");
-    }
-  });
+  }
+});
 
 app.get("/guide/:id", async (req, res) => {
     const { id } = req.params;

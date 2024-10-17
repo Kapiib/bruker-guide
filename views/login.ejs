@@ -7,21 +7,23 @@
     
     <%- include ('./partials/nav'); %>
 
-    <h1>Login</h1>
+    <div class="login-container">
+        <h1>Login</h1>
 
-    <form class="login" action="" method="POST">
-        <label for="">
-            <input type="text" placeholder="Email" name="email" id="email">
-        </label>
-        <label for="">
-            <input type="password" placeholder="Password" name="password" id="password">
-        </label>
-        <label for="">
-            <input type="submit" name="send" id="submit">
-        </label>
-    </form>
-    
-    <h3>Dont have an account? <a href="/register">Register here</a></h3>
+        <form class="login" action="" method="POST">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" placeholder="Enter your email" name="email" id="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Enter your password" name="password" id="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Log In</button>
+        </form>
+        
+        <p class="register-link">Don't have an account?&nbsp; <a href="/register">Register here</a></p>
+    </div>
 
 </body>
 </html>

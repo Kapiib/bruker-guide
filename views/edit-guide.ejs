@@ -3,57 +3,67 @@
     <head>
         <%- include('./partials/head'); %>
     </head>
-    <body>
+    <body class="edit-page">
         <%- include('./partials/nav'); %>
     
-        <form class="formContainer" action="/edit-guide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
-            <div>
-                <div class="edit">
-                    <label for="Tittel">Title</label>
-                    <input type="text" name="Tittel" value="<%= guide.tittel %>" required />
-        
-                    <label for="Tag">Tag</label>
-                    <input type="text" name="Tag" value="<%= guide.tag.join(', ') %>" />
+        <div class="edit-container">
+            <form class="edit-form" action="/edit-guide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
+                <div class="edit-main">
+                    <h2>Edit Guide</h2>
+                    <div class="edit-input-group">
+                        <label for="Tittel">Title</label>
+                        <input type="text" name="Tittel" value="<%= guide.tittel %>" required />
+                    </div>
+                    <div class="edit-input-group">
+                        <label for="Tag">Tag</label>
+                        <input type="text" name="Tag" value="<%= guide.tag.join(', ') %>" />
+                    </div>
                 </div>
         
                 <% if (guide && guide.overskrift && Array.isArray(guide.overskrift) && guide.overskrift.length) { %>
                     <% guide.overskrift.forEach((overskrift, index) => { %>
-                        <div class="newSection" id="section-<%= index %>">
+                        <div class="edit-section" id="section-<%= index %>">
                             <h3>Section <%= index + 1 %></h3>
                             
-                            <label for="Overskrift<%= index %>">Overskrift</label>
-                            <input type="text" name="Overskrift[]" value="<%= overskrift %>" required>
+                            <div class="edit-input-group">
+                                <label for="Overskrift<%= index %>">Overskrift</label>
+                                <input type="text" name="Overskrift[]" value="<%= overskrift %>" required>
+                            </div>
                     
-                            <label for="Beskrivelse<%= index %>">Beskrivelse</label>
-                            <textarea name="Beskrivelse[]" required><%= guide.beskrivelse[index] %></textarea>
+                            <div class="edit-input-group">
+                                <label for="Beskrivelse<%= index %>">Beskrivelse</label>
+                                <textarea name="Beskrivelse[]" required><%= guide.beskrivelse[index] %></textarea>
+                            </div>
                     
                             <input type="hidden" name="existingImages[]" value="<%= guide.bilde[index] %>">
                             <input type="hidden" name="deletedImages[]" value="" class="deletedImageInput">
                     
-                            <label for="photo<%= index %>">Bilde</label>
-                            <div class="file-input-container">
-                                <input type="file" name="photo<%= index %>" accept="image/*" class="file-input" id="photo<%= index %>" onchange="updateLabel(this)">
-                                <label for="photo<%= index %>" class="file-label <% if (guide.bilde[index]) { %> selected <% } %>">
-                                    <% if (guide.bilde[index]) { %>
-                                        <span>File Selected: <%= guide.bilde[index] %></span>
-                                    <% } else { %>
-                                        <span>Select File</span>
-                                    <% } %>
-                                </label>
+                            <div class="edit-input-group">
+                                <label for="photo<%= index %>">Bilde</label>
+                                <div class="edit-file-input-container">
+                                    <input type="file" name="photo<%= index %>" accept="image/*" class="edit-file-input" id="photo<%= index %>" onchange="updateLabel(this)">
+                                    <label for="photo<%= index %>" class="edit-file-label <% if (guide.bilde[index]) { %> selected <% } %>">
+                                        <% if (guide.bilde[index]) { %>
+                                            <span>File Selected: <%= guide.bilde[index] %></span>
+                                        <% } else { %>
+                                            <span>Select File</span>
+                                        <% } %>
+                                    </label>
+                                </div>
                             </div>
-                            <button type="button" class="deleteSection" data-index="<%= index %>">Delete Section</button>
+                            <button type="button" class="edit-delete-section" data-index="<%= index %>">Delete Section</button>
                         </div>
                     <% }); %>
                 <% } %>
         
                 <div id="newSections"></div>
         
-                <div id="end">
-                    <button type="button" class="end" id="addSection">Add New Section</button>
-                    <button type="submit" class="end">Save Changes</button>
+                <div class="edit-actions">
+                    <button type="button" class="edit-add-section" id="addSection">Add New Section</button>
+                    <button type="submit" class="edit-save-changes">Save Changes</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     
         <script>
             function updateLabel(input) {
@@ -69,26 +79,34 @@
     
             document.getElementById('addSection').addEventListener('click', function() {
     const newSections = document.getElementById('newSections');
-    const sectionCount = document.querySelectorAll('.newSection').length;
+    const sectionCount = document.querySelectorAll('.edit-section').length;
 
     const newSection = document.createElement('div');
-    newSection.className = 'newSection';
+    newSection.className = 'edit-section';
     newSection.id = `section-${sectionCount}`;
     newSection.innerHTML = `
     <h3>New Section</h3>
-    <label>Overskrift:</label>
-    <input type="text" name="Overskrift[]" required>
-    <label>Beskrivelse:</label>
-    <textarea name="Beskrivelse[]" rows="4" required></textarea>
-    <label>Upload Image:</label>
-    <div class="file-input-container">
-        <input type="file" name="newPhoto${sectionCount}" accept="image/*" class="file-input" id="photo${sectionCount}" onchange="updateLabel(this)">
-        <label for="photo${sectionCount}" class="file-label"><span>Select File</span></label>
+    <div class="edit-input-group">
+        <label for="Overskrift${sectionCount}">Overskrift</label>
+        <input type="text" name="Overskrift[]" id="Overskrift${sectionCount}" required>
     </div>
-    <button type="button" class="deleteSection" data-index="${sectionCount}">Delete Section</button>
-`;
+    <div class="edit-input-group">
+        <label for="Beskrivelse${sectionCount}">Beskrivelse</label>
+        <textarea name="Beskrivelse[]" id="Beskrivelse${sectionCount}" rows="4" required></textarea>
+    </div>
+    <div class="edit-input-group">
+        <label for="photo${sectionCount}">Bilde</label>
+        <div class="edit-file-input-container">
+            <input type="file" name="newPhoto${sectionCount}" accept="image/*" class="edit-file-input" id="photo${sectionCount}" onchange="updateLabel(this)">
+            <label for="photo${sectionCount}" class="edit-file-label"><span>Select File</span></label>
+        </div>
+    </div>
+    <button type="button" class="edit-delete-section" data-index="${sectionCount}">Delete Section</button>
+    `;
     newSections.appendChild(newSection);
 });
+
+
     
              // Modified event listener for delete buttons
             document.addEventListener('click', function(event) {

@@ -7,27 +7,36 @@
     
     <%- include ('./partials/nav'); %>
 
-    <h1>Register</h1>
+    <div class="register-container">
+        <h1>Register</h1>
 
-    <form class="register" action="" method="POST">
-        <label for="">
-            <input type="text" placeholder="Username" name="username" id="username" required>
-        </label>
-        <label for="">
-            <input type="email" placeholder="Email" name="email" id="email" required>
-        </label>
-        <label for="">
-            <input type="password" placeholder="Password" name="password" id="password" required>
-        </label>
-        <label for="">
-            <input type="password" placeholder="Repeat Password" name="Rpassword" id="Rpassword" required>
-        </label>
-        <label for="">
-            <input type="submit" name="send" id="submit">
-        </label>
-    </form>
+        <form class="register-form" action="" method="POST">
+            <div class="register-input-group">
+                <label for="username">Username</label>
+                <input type="text" placeholder="Username" name="username" id="username" required>
+            </div>
 
-    <h3>Already have an account? <a href="/login">Log in here</a></h3>
+            <div class="register-input-group">
+                <label for="email">Email</label>
+                <input type="email" placeholder="Email" name="email" id="email" required>
+            </div>
+
+            <div class="register-input-group">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Password" name="password" id="password" required>
+            </div>
+
+            <div class="register-input-group">
+                <label for="Rpassword">Repeat Password</label>
+                <input type="password" placeholder="Repeat Password" name="Rpassword" id="Rpassword" required>
+            </div>
+            
+            <button type="submit" class="register-submit-btn">Register</button>
+        </form>
+
+        <p class="login-link">Already have an account?&nbsp; <a href="/login">Log in here</a></p>
+    </div>
+
 
 </body>
 </html>

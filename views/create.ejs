@@ -4,35 +4,46 @@
     <%- include('./partials/head'); %>
 </head>
 <body>
-
     <%- include ('./partials/nav'); %>
 
-<form action="" method="POST" enctype="multipart/form-data">
-    <div>
-        <div id="create">
-            <h2>Lag en guide</h2>
+    <div class="create-container">
+        <form class="create-form" action="" method="POST" enctype="multipart/form-data">
+            <div id="create">
+                <h2>Lag en guide</h2>
 
-            <label for="">Tittel</label>
-                <input type="text" name="Tittel" required>
-            <label for="">Tag</label>
-                <input type="text" name="Tag" required>
-        </div>
-
-        <div class="newSection">
-            <h2>Seksjon</h2>
-
-            <label for="">Overskrift</label>
-                <input type="text" name="Overskrift" required>
-            <label for="">Beskrivelse</label>
-                <textarea name="Beskrivelse" rows="4" required></textarea>
-            <label for="">Bilde</label>
-                <input type="file" name="photo" id="photo" accept="image/*">
+                <div class="input-group">
+                    <label for="Tittel">Tittel</label>
+                    <input type="text" name="Tittel" id="Tittel" required>
+                </div>
+                <div class="input-group">
+                    <label for="Tag">Tag</label>
+                    <input type="text" name="Tag" id="Tag" required>
+                </div>
             </div>
-        </div>
-        <button class="send">Send</button>
-        <button class="SectionButton" onclick="NySeksjon()">Lag ny seksjon</button>
-    </form>
-        
+
+            <div class="newSection">
+                <h2>Seksjon</h2>
+
+                <div class="input-group">
+                    <label for="Overskrift">Overskrift</label>
+                    <input type="text" name="Overskrift" id="Overskrift" required>
+                </div>
+                <div class="input-group">
+                    <label for="Beskrivelse">Beskrivelse</label>
+                    <textarea name="Beskrivelse" id="Beskrivelse" rows="4" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="photo" class="file-label">Velg bilde</label>
+                    <input type="file" name="photo" id="photo" accept="image/*">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="send">Send</button>
+                <button type="button" class="SectionButton" onclick="NySeksjon()">Lag ny seksjon</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         function NySeksjon() {
@@ -43,17 +54,22 @@
 
             newSectionContainer.innerHTML = `
                 <h2>Seksjon</h2>
-                <label for="">Overskrift</label>
+                <div class="input-group">
+                    <label for="Overskrift">Overskrift</label>
                     <input type="text" name="Overskrift" required>
-                <label for="">Beskrivelse</label>
+                </div>
+                <div class="input-group">
+                    <label for="Beskrivelse">Beskrivelse</label>
                     <textarea name="Beskrivelse" rows="4" required></textarea>
-                <label for="">Bilde</label>
+                </div>
+                <div class="input-group">
+                    <label for="photo" class="file-label">Velg bilde</label>
                     <input type="file" name="photo" accept="image/*">
+                </div>
             `;
 
-            document.querySelector('form div').appendChild(newSectionContainer);
+            document.querySelector('.create-form').insertBefore(newSectionContainer, document.querySelector('.button-group'));
         }
     </script>
-    
 </body>
 </html>
