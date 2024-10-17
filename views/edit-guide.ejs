@@ -20,19 +20,19 @@
                     <% guide.overskrift.forEach((overskrift, index) => { %>
                         <div class="newSection" id="section-<%= index %>">
                             <h3>Section <%= index + 1 %></h3>
-                
+                            
                             <label for="Overskrift<%= index %>">Overskrift</label>
                             <input type="text" name="Overskrift[]" value="<%= overskrift %>" required>
-                
+                    
                             <label for="Beskrivelse<%= index %>">Beskrivelse</label>
                             <textarea name="Beskrivelse[]" required><%= guide.beskrivelse[index] %></textarea>
-                
+                    
                             <input type="hidden" name="existingImages[]" value="<%= guide.bilde[index] %>">
                             <input type="hidden" name="deletedImages[]" value="" class="deletedImageInput">
-                
+                    
                             <label for="photo<%= index %>">Bilde</label>
                             <div class="file-input-container">
-                                <input type="file" name="photo" accept="image/*" class="file-input" id="photo<%= index %>" onchange="updateLabel(this)">
+                                <input type="file" name="photo<%= index %>" accept="image/*" class="file-input" id="photo<%= index %>" onchange="updateLabel(this)">
                                 <label for="photo<%= index %>" class="file-label <% if (guide.bilde[index]) { %> selected <% } %>">
                                     <% if (guide.bilde[index]) { %>
                                         <span>File Selected: <%= guide.bilde[index] %></span>
@@ -75,20 +75,18 @@
     newSection.className = 'newSection';
     newSection.id = `section-${sectionCount}`;
     newSection.innerHTML = `
-        <h3>New Section</h3>
-        <label>Overskrift:</label>
-        <input type="text" name="Overskrift[]" required>
-        <label>Beskrivelse:</label>
-        <textarea name="Beskrivelse[]" rows="4" required></textarea>
-        <label>Upload Image:</label>
-        <div class="file-input-container">
-            <input type="file" name="newPhoto" accept="image/*" class="file-input" id="photo${sectionCount}" onchange="updateLabel(this)">
-            <label for="photo${sectionCount}" class="file-label"><span>Select File</span></label>
-        </div>
-        <input type="hidden" name="existingImages[]" value="">
-        <input type="hidden" name="deletedImages[]" value="" class="deletedImageInput">
-        <button type="button" class="deleteSection" data-index="${sectionCount}">Delete Section</button>
-    `;
+    <h3>New Section</h3>
+    <label>Overskrift:</label>
+    <input type="text" name="Overskrift[]" required>
+    <label>Beskrivelse:</label>
+    <textarea name="Beskrivelse[]" rows="4" required></textarea>
+    <label>Upload Image:</label>
+    <div class="file-input-container">
+        <input type="file" name="newPhoto${sectionCount}" accept="image/*" class="file-input" id="photo${sectionCount}" onchange="updateLabel(this)">
+        <label for="photo${sectionCount}" class="file-label"><span>Select File</span></label>
+    </div>
+    <button type="button" class="deleteSection" data-index="${sectionCount}">Delete Section</button>
+`;
     newSections.appendChild(newSection);
 });
     

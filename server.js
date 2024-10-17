@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser")
 const path = require("path");
 require("dotenv").config();
 
@@ -27,20 +28,22 @@ const diskStorage = multer.diskStorage({
 
 const uploads = multer({
   storage: diskStorage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Limit to 5MB
+  limits: { fileSize: 10 * 1024 * 1024 }, // Limit to 10MB
 });
 
 const uploadFields = uploads.fields([
-  { name: 'photo', maxCount: 10 }, // Adjust maxCount as needed
-  { name: 'newPhoto', maxCount: 10 } // For new sections
+  { name: 'photo0', maxCount: 1 }, // Adjust maxCount as needed
+  { name: 'photo1', maxCount: 1 } // For new sections
 ]);
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb'}));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/guide")
@@ -241,58 +244,42 @@ app.get("/edit-guide/:id", async (req, res) => {
 });
 
 // Handle edit form submission
-app.post("/edit-guide/:id", uploadFields, async (req, res) => {
-  console.log("Files:", req.files);
-  console.log("Body:", req.body);
+const uploadAny = uploads.any(); // Use this to accept any file fields
 
-  const { Tittel, Tag, existingImages, deletedImages, sectionId } = req.body;
+app.post("/edit-guide/:id", uploadAny, async (req, res) => {
+    const { Tittel, Tag, existingImages, deletedImages } = req.body;
 
-  // Handle existing images
-  let updatedImages = existingImages ? (Array.isArray(existingImages) ? existingImages : [existingImages]) : [];
-
-  // Handle updated existing photos
-  if (req.files.photo) {
-    req.files.photo.forEach((file, index) => {
-      updatedImages[index] = file.filename;
+    let updatedImages = existingImages ? (Array.isArray(existingImages) ? existingImages : [existingImages]) : [];
+  
+    req.files.forEach((file) => {
+        const sectionIndex = parseInt(file.fieldname.replace(/^\D+/g, ''), 10);
+        updatedImages[sectionIndex] = file.filename;
     });
-  }
 
-  // Handle new photos
-  if (req.files.newPhoto) {
-    req.files.newPhoto.forEach((file) => {
-      updatedImages.push(file.filename);
-    });
-  }
+    if (deletedImages) {
+        const deletedImagesArray = Array.isArray(deletedImages) ? deletedImages : [deletedImages];
+        deletedImagesArray.forEach((deletedImage, index) => {
+            if (deletedImage) {
+                updatedImages[index] = ''; // Empty the image entry
+            }
+        });
+    }
 
-  // Handle deleted images
-  if (deletedImages) {
-    const deletedImagesArray = Array.isArray(deletedImages) ? deletedImages : [deletedImages];
-    deletedImagesArray.forEach((deletedImage, index) => {
-      if (deletedImage) {
-        updatedImages[index] = '';
-      }
-    });
-  }
+    const updateData = {
+        tittel: Tittel,
+        tag: Tag.split(",").map(tag => tag.trim()),
+        overskrift: req.body.Overskrift || [],
+        beskrivelse: req.body.Beskrivelse || [],
+        bilde: updatedImages.filter(img => img) // Remove empty strings
+    };
 
-  // Prepare update data for sections
-  const updatedOverskrifter = req.body.Overskrift || [];
-  const updatedBeskrivelser = req.body.Beskrivelse || [];
-
-  const updateData = {
-    tittel: Tittel,
-    tag: Tag.split(",").map(tag => tag.trim()),
-    overskrift: updatedOverskrifter,
-    beskrivelse: updatedBeskrivelser,
-    bilde: updatedImages.filter(img => img) // Remove empty strings
-  };
-
-  try {
-    await UserGuide.findByIdAndUpdate(req.params.id, updateData);
-    res.redirect(`/guide/${req.params.id}`);
-  } catch (error) {
-    console.error("Error updating guide:", error);
-    res.status(500).send("Error updating guide");
-  }
+    try {
+        await UserGuide.findByIdAndUpdate(req.params.id, updateData);
+        res.redirect(`/guide/${req.params.id}`);
+    } catch (error) {
+        console.error("Error updating guide:", error);
+        res.status(500).send("Error updating guide");
+    }
 });
 
 app.post("/delete-guide/:id", async (req, res) => {
