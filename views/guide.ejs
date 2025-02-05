@@ -22,7 +22,7 @@
             </div>
             <% guide.overskrift.forEach((heading, index) => { %>
                 <h2 id="heading-<%= index %>"><%= heading %></h2>
-                <p><%= guide.beskrivelse[index] %></p>
+                <p><%- guide.beskrivelse[index].replace(/\n/g, '<br>') %></p>
                 
                 <% if (guide.bilde[index]) { %>
                     <img src="/uploads/<%= guide.bilde[index] %>" alt="<%= heading %> image" class="uploads" />
